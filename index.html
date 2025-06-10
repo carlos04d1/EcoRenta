@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoRenta Bolivia - Alquiler de Autos Eléctricos e Híbridos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-100 font-roboto">
+    <!-- Selector de Rol -->
+    <header class="bg-blue-500 text-white p-4">
+        <div class="container mx-auto">
+            <h1 class="text-2xl font-bold mb-4">EcoRenta Bolivia</h1>
+            <div class="flex gap-4">
+                <button onclick="cambiarRol('cliente')" class="bg-white text-blue-500 px-4 py-2 rounded hover:bg-blue-50">Cliente</button>
+                <button onclick="cambiarRol('trabajador')" class="bg-white text-blue-500 px-4 py-2 rounded hover:bg-blue-50">Trabajador</button>
+                <button onclick="cambiarRol('admin')" class="bg-white text-blue-500 px-4 py-2 rounded hover:bg-blue-50">Admin</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <!-- Filtros -->
+        <div id="filtros" class="mb-6">
+            <div class="flex gap-4">
+                <button onclick="filtrarAutos('todos')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Todos</button>
+                <button onclick="filtrarAutos('electrico')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Eléctricos</button>
+                <button onclick="filtrarAutos('hibrido')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Híbridos</button>
+            </div>
+        </div>
+
+        <!-- Listado de Autos -->
+        <div id="listaAutos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Las tarjetas de autos se generarán dinámicamente -->
+        </div>
+
+        <!-- Formulario de Alquiler (solo para clientes) -->
+        <div id="formularioAlquiler" class="hidden bg-white p-6 rounded-lg shadow-lg mb-8">
+            <h2 class="text-xl font-bold mb-4">Alquilar Auto</h2>
+            <form id="alquilerForm" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700">Nombre</label>
+                    <input type="text" id="nombreCliente" class="w-full p-2 border rounded" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700">Auto</label>
+                    <select id="autoSeleccionado" class="w-full p-2 border rounded" required></select>
+                </div>
+                <div>
+                    <label class="block text-gray-700">Fecha y Hora Inicio</label>
+                    <input type="datetime-local" id="fechaInicio" class="w-full p-2 border rounded" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700">Fecha y Hora Fin</label>
+                    <input type="datetime-local" id="fechaFin" class="w-full p-2 border rounded" required>
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">Alquilar</button>
+            </form>
+        </div>
+
+        <!-- Panel de Admin -->
+        <div id="panelAdmin" class="hidden bg-white p-6 rounded-lg shadow-lg mb-8">
+            <h2 class="text-xl font-bold mb-4">Panel de Administración</h2>
+            <form id="agregarAutoForm" class="space-y-4 mb-6">
+                <div>
+                    <label class="block text-gray-700">Nombre del Auto</label>
+                    <input type="text" id="nombreAuto" class="w-full p-2 border rounded" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700">Tipo</label>
+                    <select id="tipoAuto" class="w-full p-2 border rounded" required>
+                        <option value="electrico">Eléctrico</option>
+                        <option value="hibrido">Híbrido</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-700">Precio por Hora (Bs)</label>
+                    <input type="number" id="precioAuto" class="w-full p-2 border rounded" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700">URL de la Imagen</label>
+                    <input type="url" id="imagenAuto" class="w-full p-2 border rounded" required>
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">Agregar Auto</button>
+            </form>
+            <button onclick="reiniciarDisponibilidad()" class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600">Reiniciar Disponibilidad</button>
+        </div>
+
+        <!-- Historial de Rentas -->
+        <div id="historialRentas" class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-xl font-bold mb-4">Historial de Rentas</h2>
+            <div id="listaRentas" class="space-y-4">
+                <!-- Las rentas se generarán dinámicamente -->
+            </div>
+        </div>
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/logic.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+</html> 
