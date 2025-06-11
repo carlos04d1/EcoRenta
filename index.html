@@ -45,6 +45,10 @@
                     <input type="text" id="nombreCliente" class="w-full p-2 border rounded" required>
                 </div>
                 <div>
+                    <label class="block text-gray-700">Carnet de Identidad</label>
+                    <input type="text" id="ciCliente" class="w-full p-2 border rounded" required>
+                </div>
+                <div>
                     <label class="block text-gray-700">Auto</label>
                     <select id="autoSeleccionado" class="w-full p-2 border rounded" required></select>
                 </div>
@@ -86,6 +90,75 @@
                 <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">Agregar Auto</button>
             </form>
             <button onclick="reiniciarDisponibilidad()" class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600">Reiniciar Disponibilidad</button>
+        </div>
+
+        <!-- Panel de Trabajador -->
+        <div id="panelTrabajador" class="hidden bg-white p-6 rounded-lg shadow-lg mb-8">
+            <h2 class="text-xl font-bold mb-4">Panel de Trabajador</h2>
+
+            <form id="datosTrabajadorForm" class="space-y-4 mb-6">
+                <div>
+                    <label class="block text-gray-700">Nombre Trabajador</label>
+                    <input type="text" id="nombreTrabajador" class="w-full p-2 border rounded" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700">CI Trabajador</label>
+                    <input type="text" id="ciTrabajador" class="w-full p-2 border rounded" required>
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Guardar Datos</button>
+            </form>
+
+            <h3 class="font-bold mb-2">Solicitudes Pendientes</h3>
+            <div id="listaSolicitudes" class="space-y-2 mb-6"></div>
+
+            <h3 class="font-bold mb-2">Registrar Revisión</h3>
+            <form id="revisionForm" class="space-y-4 mb-6">
+                <div>
+                    <label class="block text-gray-700">Auto</label>
+                    <select id="revisionAuto" class="w-full p-2 border rounded" required></select>
+                </div>
+                <div>
+                    <label class="block text-gray-700">Estado Anterior</label>
+                    <input type="text" id="estadoAnterior" class="w-full p-2 border rounded" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700">Notas</label>
+                    <input type="text" id="notasRevision" class="w-full p-2 border rounded" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700">Fecha</label>
+                    <input type="date" id="fechaRevision" class="w-full p-2 border rounded" required>
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Registrar</button>
+            </form>
+
+            <h3 class="font-bold mb-2">Registrar Multa</h3>
+            <form id="multaForm" class="space-y-4 mb-6">
+                <div>
+                    <label class="block text-gray-700">Nombre Cliente</label>
+                    <input type="text" id="multaClienteNombre" class="w-full p-2 border rounded" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700">CI Cliente</label>
+                    <input type="text" id="multaClienteCI" class="w-full p-2 border rounded" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700">Motivo</label>
+                    <input type="text" id="motivoMulta" class="w-full p-2 border rounded" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700">Monto</label>
+                    <input type="number" id="montoMulta" class="w-full p-2 border rounded" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700">Fecha</label>
+                    <input type="date" id="fechaMulta" class="w-full p-2 border rounded" required>
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Crear Multa</button>
+            </form>
+
+            <h3 class="font-bold mb-2">Historial de Revisiones</h3>
+            <div id="listaRevisiones" class="space-y-2"></div>
         </div>
 
         <!-- Historial de Rentas -->

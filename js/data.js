@@ -26,7 +26,7 @@ const autos = [
     }
 ];
 
-const rentas = [
+const rentasConfirmadas = [
     {
         id: 1,
         cliente: "Juan Pérez",
@@ -35,4 +35,8 @@ const rentas = [
         fechaFin: "2024-03-20T14:00",
         total: 600
     }
-]; 
+];
+
+const solicitudesPendientes = [];
+const revisionesVehiculo = [];
+const multas = [];

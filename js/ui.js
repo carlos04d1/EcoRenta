@@ -3,16 +3,20 @@ function actualizarVista() {
     actualizarVisibilidad();
     mostrarAutos(autos);
     mostrarRentas();
+    mostrarSolicitudes();
+    mostrarRevisiones();
 }
 
 function actualizarVisibilidad() {
     const formularioAlquiler = document.getElementById('formularioAlquiler');
     const panelAdmin = document.getElementById('panelAdmin');
+    const panelTrabajador = document.getElementById('panelTrabajador');
     const filtros = document.getElementById('filtros');
 
     // Mostrar/ocultar elementos según el rol
     formularioAlquiler.style.display = rolActual === 'cliente' ? 'block' : 'none';
     panelAdmin.style.display = rolActual === 'admin' ? 'block' : 'none';
+    panelTrabajador.style.display = rolActual === 'trabajador' || rolActual === 'admin' ? 'block' : 'none';
     filtros.style.display = rolActual !== 'admin' ? 'block' : 'none';
 }
 
@@ -63,17 +67,20 @@ function mostrarRentas() {
         const auto = obtenerAutoPorId(renta.autoId);
         const div = document.createElement('div');
         div.className = 'bg-gray-50 p-4 rounded-lg';
-        
+
         div.innerHTML = `
             <div class="flex justify-between items-center">
                 <div>
                     <h4 class="font-bold">${auto.nombre}</h4>
                     <p class="text-gray-600">Cliente: ${renta.cliente}</p>
+                    ${renta.clienteCI ? `<p class="text-gray-600">CI: ${renta.clienteCI}</p>` : ''}
                     <p class="text-gray-600">Inicio: ${new Date(renta.fechaInicio).toLocaleString()}</p>
                     <p class="text-gray-600">Fin: ${new Date(renta.fechaFin).toLocaleString()}</p>
+                    ${renta.trabajadorNombre ? `<p class="text-gray-600">Atendido por: ${renta.trabajadorNombre}</p>` : ''}
+                    ${renta.estado ? `<p class="text-gray-600">Estado: ${renta.estado}</p>` : ''}
                 </div>
                 <div class="text-right">
-                    <p class="text-blue-500 font-bold">Total: Bs. ${renta.total}</p>
+                    ${renta.total ? `<p class="text-blue-500 font-bold">Total: Bs. ${renta.total}</p>` : ''}
                 </div>
             </div>
         `;
@@ -82,16 +89,77 @@ function mostrarRentas() {
     });
 }
 
+function mostrarSolicitudes() {
+    const contenedor = document.getElementById('listaSolicitudes');
+    if (!contenedor) return;
+    contenedor.innerHTML = '';
+
+    solicitudesPendientes.forEach((sol, index) => {
+        const auto = obtenerAutoPorId(sol.autoID);
+        const div = document.createElement('div');
+        div.className = 'bg-gray-50 p-4 rounded-lg flex justify-between items-center mb-2';
+        div.innerHTML = `
+            <div>
+                <p class="font-bold">${sol.clienteNombre} (CI: ${sol.clienteCI})</p>
+                <p>${auto.nombre}</p>
+                <p>${new Date(sol.fechaInicio).toLocaleString()} - ${new Date(sol.fechaFin).toLocaleString()}</p>
+            </div>
+            <div class="flex gap-2">
+                <button class="bg-green-500 text-white px-2 py-1 rounded" onclick="aprobarSolicitudUI(${index})">Aprobar</button>
+                <button class="bg-red-500 text-white px-2 py-1 rounded" onclick="rechazarSolicitudUI(${index})">Rechazar</button>
+            </div>
+        `;
+        contenedor.appendChild(div);
+    });
+}
+
+function mostrarRevisiones() {
+    const contenedor = document.getElementById('listaRevisiones');
+    if (!contenedor) return;
+    contenedor.innerHTML = '';
+    revisionesVehiculo.forEach(rev => {
+        const auto = obtenerAutoPorId(rev.autoID);
+        const div = document.createElement('div');
+        div.className = 'bg-gray-50 p-4 rounded-lg mb-2';
+        div.innerHTML = `
+            <p class="font-bold">${auto.nombre} - ${rev.fechaRevision}</p>
+            <p>Estado: ${rev.estadoAnterior}</p>
+            <p>Notas: ${rev.notas}</p>
+            <p>Revisado por: ${rev.trabajadorNombre} (${rev.trabajadorCI})</p>
+        `;
+        contenedor.appendChild(div);
+    });
+}
+
+function aprobarSolicitudUI(indice) {
+    if (!trabajadorActual.nombre || !trabajadorActual.ci) {
+        alert('Ingrese nombre y CI del trabajador');
+        return;
+    }
+    aprobarSolicitud(indice, trabajadorActual.nombre, trabajadorActual.ci);
+}
+
+function rechazarSolicitudUI(indice) {
+    if (!trabajadorActual.nombre || !trabajadorActual.ci) {
+        alert('Ingrese nombre y CI del trabajador');
+        return;
+    }
+    rechazarSolicitud(indice, trabajadorActual.nombre, trabajadorActual.ci);
+}
+
 // Funciones de formularios
 function actualizarSelectAutos() {
     const select = document.getElementById('autoSeleccionado');
-    select.innerHTML = '';
+    const revisionSelect = document.getElementById('revisionAuto');
+    if (select) select.innerHTML = '';
+    if (revisionSelect) revisionSelect.innerHTML = '';
 
     autos.filter(auto => auto.disponible).forEach(auto => {
         const option = document.createElement('option');
         option.value = auto.id;
         option.textContent = `${auto.nombre} - Bs. ${auto.precioHora}/hora`;
-        select.appendChild(option);
+        if (select) select.appendChild(option.cloneNode(true));
+        if (revisionSelect) revisionSelect.appendChild(option);
     });
 }
 
@@ -107,8 +175,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const fechaFin = document.getElementById('fechaFin').value;
 
         if (validarAlquiler(fechaInicio, fechaFin)) {
+            const ci = document.getElementById('ciCliente').value;
             clienteActual = nombre;
-            crearAlquiler(nombre, autoId, fechaInicio, fechaFin);
+            crearSolicitud(nombre, ci, autoId, fechaInicio, fechaFin);
             e.target.reset();
         }
     });
@@ -125,7 +194,45 @@ document.addEventListener('DOMContentLoaded', () => {
         agregarAuto(nombre, tipo, precio, imagen);
         e.target.reset();
     });
+
+    // Formulario datos trabajador
+    const datosTrabajador = document.getElementById('datosTrabajadorForm');
+    if (datosTrabajador) {
+        datosTrabajador.addEventListener('submit', (e) => {
+            e.preventDefault();
+            trabajadorActual.nombre = document.getElementById('nombreTrabajador').value;
+            trabajadorActual.ci = document.getElementById('ciTrabajador').value;
+        });
+    }
+
+    const revisionForm = document.getElementById('revisionForm');
+    if (revisionForm) {
+        revisionForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const autoID = parseInt(document.getElementById('revisionAuto').value);
+            const estadoAnterior = document.getElementById('estadoAnterior').value;
+            const notas = document.getElementById('notasRevision').value;
+            const fecha = document.getElementById('fechaRevision').value;
+            registrarRevision(autoID, estadoAnterior, notas, trabajadorActual.nombre, trabajadorActual.ci, fecha);
+            e.target.reset();
+        });
+    }
+
+    const multaForm = document.getElementById('multaForm');
+    if (multaForm) {
+        multaForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const clienteNombre = document.getElementById('multaClienteNombre').value;
+            const clienteCI = document.getElementById('multaClienteCI').value;
+            const motivo = document.getElementById('motivoMulta').value;
+            const monto = document.getElementById('montoMulta').value;
+            const fecha = document.getElementById('fechaMulta').value;
+            registrarMulta(clienteCI, clienteNombre, motivo, monto, trabajadorActual.nombre, trabajadorActual.ci, fecha);
+            e.target.reset();
+        });
+    }
 });
 
 // Inicialización
 actualizarVista(); 
+

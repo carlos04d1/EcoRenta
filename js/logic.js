@@ -1,6 +1,7 @@
 // Variables globales
 let rolActual = 'cliente';
 let clienteActual = '';
+let trabajadorActual = { nombre: '', ci: '' };
 
 // Funciones de manejo de roles
 function cambiarRol(rol) {
@@ -29,29 +30,23 @@ function validarAlquiler(fechaInicio, fechaFin) {
     return true;
 }
 
-function crearAlquiler(cliente, autoId, fechaInicio, fechaFin) {
+function crearSolicitud(nombre, ci, autoId, fechaInicio, fechaFin) {
     const auto = autos.find(a => a.id === autoId);
     if (!auto || !auto.disponible) {
         alert('El auto no está disponible');
         return;
     }
 
-    const inicio = new Date(fechaInicio);
-    const fin = new Date(fechaFin);
-    const duracionHoras = (fin - inicio) / (1000 * 60 * 60);
-    const total = duracionHoras * auto.precioHora;
-
-    const nuevaRenta = {
-        id: rentas.length + 1,
-        cliente,
-        autoId,
+    const solicitud = {
+        clienteNombre: nombre,
+        clienteCI: ci,
+        autoID: autoId,
         fechaInicio,
         fechaFin,
-        total
+        estado: 'pendiente'
     };
 
-    rentas.push(nuevaRenta);
-    auto.disponible = false;
+    solicitudesPendientes.push(solicitud);
     actualizarVista();
 }
 
@@ -91,11 +86,88 @@ function obtenerAutos() {
 
 function obtenerRentas() {
     if (rolActual === 'cliente') {
-        return rentas.filter(renta => renta.cliente === clienteActual);
+        return rentasConfirmadas.filter(renta => renta.cliente === clienteActual);
     }
-    return rentas;
+    return rentasConfirmadas;
 }
 
 function obtenerAutoPorId(id) {
     return autos.find(auto => auto.id === id);
-} 
+}
+
+// Gestión de solicitudes
+function aprobarSolicitud(index, trabajadorNombre, trabajadorCI) {
+    const solicitud = solicitudesPendientes.splice(index, 1)[0];
+    if (!solicitud) return;
+
+    const auto = obtenerAutoPorId(solicitud.autoID);
+    if (!auto) return;
+
+    const inicio = new Date(solicitud.fechaInicio);
+    const fin = new Date(solicitud.fechaFin);
+    const horas = (fin - inicio) / (1000 * 60 * 60);
+    const total = horas * auto.precioHora;
+
+    const renta = {
+        id: rentasConfirmadas.length + 1,
+        cliente: solicitud.clienteNombre,
+        clienteCI: solicitud.clienteCI,
+        autoId: solicitud.autoID,
+        fechaInicio: solicitud.fechaInicio,
+        fechaFin: solicitud.fechaFin,
+        trabajadorNombre,
+        trabajadorCI,
+        estado: 'aprobado',
+        total
+    };
+
+    rentasConfirmadas.push(renta);
+    auto.disponible = false;
+    actualizarVista();
+}
+
+function rechazarSolicitud(index, trabajadorNombre, trabajadorCI) {
+    const solicitud = solicitudesPendientes.splice(index, 1)[0];
+    if (!solicitud) return;
+
+    const registro = {
+        id: rentasConfirmadas.length + 1,
+        cliente: solicitud.clienteNombre,
+        clienteCI: solicitud.clienteCI,
+        autoId: solicitud.autoID,
+        fechaInicio: solicitud.fechaInicio,
+        fechaFin: solicitud.fechaFin,
+        trabajadorNombre,
+        trabajadorCI,
+        estado: 'rechazado'
+    };
+
+    rentasConfirmadas.push(registro);
+    actualizarVista();
+}
+
+// Revisiones y multas
+function registrarRevision(autoID, estadoAnterior, notas, trabajadorNombre, trabajadorCI, fechaRevision) {
+    revisionesVehiculo.push({
+        autoID,
+        estadoAnterior,
+        notas,
+        trabajadorNombre,
+        trabajadorCI,
+        fechaRevision
+    });
+    actualizarVista();
+}
+
+function registrarMulta(clienteCI, clienteNombre, motivo, monto, trabajadorNombre, trabajadorCI, fecha) {
+    multas.push({
+        clienteCI,
+        clienteNombre,
+        motivo,
+        monto: parseFloat(monto),
+        trabajador: trabajadorNombre,
+        trabajadorCI,
+        fecha
+    });
+    actualizarVista();
+}
