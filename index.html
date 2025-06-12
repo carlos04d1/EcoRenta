@@ -6,18 +6,26 @@
     <title>EcoRenta Bolivia - Alquiler de Autos Eléctricos e Híbridos</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="bg-gray-100 font-roboto">
     <!-- Selector de Rol -->
     <header class="bg-blue-500 text-white p-4">
-        <div class="container mx-auto">
+        <div class="container mx-auto flex items-center">
             <h1 class="text-2xl font-bold mb-4">EcoRenta Bolivia</h1>
-            <div class="flex gap-4">
-                <button onclick="cambiarRol('cliente')" class="bg-white text-blue-500 px-4 py-2 rounded hover:bg-blue-50">Cliente</button>
-                <button onclick="cambiarRol('trabajador')" class="bg-white text-blue-500 px-4 py-2 rounded hover:bg-blue-50">Trabajador</button>
-                <button onclick="cambiarRol('admin')" class="bg-white text-blue-500 px-4 py-2 rounded hover:bg-blue-50">Admin</button>
-            </div>
+                        <div class="relative ml-auto">
+                <button id="userMenuButton" onclick="toggleUserMenu()" class="text-white">
+                    <i class="fas fa-user text-2xl"></i>
+                </button>
+                <div id="userMenu" class="hidden absolute right-0 mt-2 w-40 bg-white text-gray-700 rounded shadow">
+                    <ul>
+                        <li><button onclick="setRole('cliente')" class="block w-full text-left px-4 py-2 hover:bg-gray-100">Cliente</button></li>
+                        <li><button onclick="setRole('trabajador')" class="block w-full text-left px-4 py-2 hover:bg-gray-100">Trabajador</button></li>
+                        <li><button onclick="setRole('admin')" class="block w-full text-left px-4 py-2 hover:bg-gray-100">Admin</button></li>
+                    </ul>
+                </div>
+        </div>
         </div>
     </header>
 

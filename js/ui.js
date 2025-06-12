@@ -131,6 +131,13 @@ function mostrarRevisiones() {
     });
 }
 
+function toggleUserMenu() {
+    const menu = document.getElementById('userMenu');
+    if (menu) {
+        menu.classList.toggle('hidden');
+    }
+}
+
 function aprobarSolicitudUI(indice) {
     if (!trabajadorActual.nombre || !trabajadorActual.ci) {
         alert('Ingrese nombre y CI del trabajador');

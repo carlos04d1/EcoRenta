@@ -9,6 +9,11 @@ function cambiarRol(rol) {
     actualizarVista();
 }
 
+function setRole(rol) {
+    cambiarRol(rol);
+    toggleUserMenu();
+}
+
 // Funciones de filtrado
 function filtrarAutos(tipo) {
     const autosFiltrados = tipo === 'todos' 
