@@ -200,15 +200,24 @@ function mostrarNotificacion(mensaje) {
 function actualizarSelectAutos() {
     const select = document.getElementById('autoSeleccionado');
     const revisionSelect = document.getElementById('revisionAuto');
+    const multaSelect = document.getElementById('multaVehiculo');
     if (select) select.innerHTML = '';
     if (revisionSelect) revisionSelect.innerHTML = '';
+    if (multaSelect) multaSelect.innerHTML = '';
 
     autos.filter(auto => auto.disponible).forEach(auto => {
-        const option = document.createElement('option');
-        option.value = auto.id;
-        option.textContent = `${auto.nombre} - Bs. ${auto.precioHora}/hora`;
-        if (select) select.appendChild(option.cloneNode(true));
-        if (revisionSelect) revisionSelect.appendChild(option);
+        const optionAlquiler = document.createElement('option');
+        optionAlquiler.value = auto.id;
+        optionAlquiler.textContent = `${auto.nombre} - Bs. ${auto.precioHora}/hora`;
+        if (select) select.appendChild(optionAlquiler.cloneNode(true));
+        if (revisionSelect) revisionSelect.appendChild(optionAlquiler.cloneNode(true));
+
+        if (multaSelect) {
+            const optionMulta = document.createElement('option');
+            optionMulta.value = auto.nombre;
+            optionMulta.textContent = auto.nombre;
+            multaSelect.appendChild(optionMulta);
+        }
     });
 }
 

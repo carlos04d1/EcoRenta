@@ -128,4 +128,60 @@ const rentasConfirmadas = [
 
 const solicitudesPendientes = [];
 const revisionesVehiculo = [];
-const multas = [];
+const multas = [
+    {
+        clienteNombre: "Carla Fernández",
+        clienteCI: "7234567",
+        vehiculo: "Tesla Model 3",
+        motivo: "Exceso de velocidad",
+        monto: 100,
+        trabajador: "Luis Morales",
+        trabajadorCI: "5234567",
+        fecha: "2025-05-02",
+        estado: "pendiente"
+    },
+    {
+        clienteNombre: "Jorge Silva",
+        clienteCI: "8123456",
+        vehiculo: "Hyundai loniq 6",
+        motivo: "Mal estacionado",
+        monto: 80,
+        trabajador: "Luisa Mendoza",
+        trabajadorCI: "6123456",
+        fecha: "2025-05-05",
+        estado: "pendiente"
+    },
+    {
+        clienteNombre: "Paula Torres",
+        clienteCI: "9345678",
+        vehiculo: "Volkswagen ID. Buzz",
+        motivo: "Conducción imprudente",
+        monto: 120,
+        trabajador: "Juan Pérez",
+        trabajadorCI: "3344556",
+        fecha: "2025-05-10",
+        estado: "pendiente"
+    },
+    {
+        clienteNombre: "Ricardo López",
+        clienteCI: "5678901",
+        vehiculo: "Ford Mustang Mach-E",
+        motivo: "Exceso de velocidad",
+        monto: 150,
+        trabajador: "María Romero",
+        trabajadorCI: "2233445",
+        fecha: "2025-05-12",
+        estado: "pendiente"
+    },
+    {
+        clienteNombre: "Mariana Aguilar",
+        clienteCI: "6789012",
+        vehiculo: "BMW i4 M50",
+        motivo: "No respetar señalización",
+        monto: 90,
+        trabajador: "Carlos Díaz",
+        trabajadorCI: "8899000",
+        fecha: "2025-05-15",
+        estado: "pendiente"
+    }
+];
