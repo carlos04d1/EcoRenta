@@ -61,7 +61,7 @@ const autos = [
         id: 9,
         nombre: "Chevrolet Bolt EUV",
         tipo: "electrico",
-        precioHora: 1920,
+        precioHora: 192,
         disponible: true,
         imagen: "https://di-uploads-pod31.dealerinspire.com/executivechevy/uploads/2022/10/2022-Chevrolet-Bolt-EUV-Premier.png"
     },
