@@ -164,15 +164,24 @@ function registrarRevision(autoID, estadoAnterior, notas, trabajadorNombre, trab
     actualizarVista();
 }
 
-function registrarMulta(clienteCI, clienteNombre, motivo, monto, trabajadorNombre, trabajadorCI, fecha) {
+function registrarMulta(clienteCI, clienteNombre, vehiculo, motivo, monto, trabajadorNombre, trabajadorCI, fecha) {
     multas.push({
         clienteCI,
         clienteNombre,
+        vehiculo,
         motivo,
         monto: parseFloat(monto),
         trabajador: trabajadorNombre,
         trabajadorCI,
-        fecha
+        fecha,
+        estado: 'pendiente'
     });
     actualizarVista();
+}
+
+function pagarMulta(indice) {
+    if (multas[indice]) {
+        multas[indice].estado = 'pagada';
+        actualizarVista();
+    }
 }

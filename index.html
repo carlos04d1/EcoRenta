@@ -163,6 +163,10 @@
                     <input type="text" id="multaClienteCI" class="w-full p-2 border rounded" required>
                 </div>
                 <div>
+                    <label class="block text-gray-700">Vehículo</label>
+                    <input type="text" id="multaVehiculo" class="w-full p-2 border rounded" required>
+                </div>
+                <div>
                     <label class="block text-gray-700">Motivo</label>
                     <input type="text" id="motivoMulta" class="w-full p-2 border rounded" required>
                 </div>
@@ -187,6 +191,12 @@
             <div id="listaRentas" class="space-y-4">
                 <!-- Las rentas se generarán dinámicamente -->
             </div>
+        </div>
+
+        <!-- Listado de Multas -->
+        <div id="multasSection" class="hidden bg-white p-6 rounded-lg shadow-lg mt-8">
+            <h2 class="text-xl font-bold mb-4">Multas Registradas</h2>
+            <div id="listaMultas" class="space-y-2"></div>
         </div>
     </main>
 

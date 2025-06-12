@@ -5,12 +5,14 @@ function actualizarVista() {
     mostrarRentas();
     mostrarSolicitudes();
     mostrarRevisiones();
+    mostrarMultas();
 }
 
 function actualizarVisibilidad() {
     const formularioAlquiler = document.getElementById('formularioAlquiler');
     const panelAdmin = document.getElementById('panelAdmin');
     const panelTrabajador = document.getElementById('panelTrabajador');
+    const multasSection = document.getElementById('multasSection');
     const filtros = document.getElementById('filtros');
 
     // Mostrar/ocultar elementos según el rol
@@ -18,6 +20,9 @@ function actualizarVisibilidad() {
     panelAdmin.style.display = rolActual === 'admin' ? 'block' : 'none';
     panelTrabajador.style.display = rolActual === 'trabajador' || rolActual === 'admin' ? 'block' : 'none';
     filtros.style.display = rolActual !== 'admin' ? 'block' : 'none';
+    if (multasSection) {
+        multasSection.style.display = rolActual === 'trabajador' || rolActual === 'admin' ? 'block' : 'none';
+    }
 }
 
 // Funciones de renderizado
@@ -131,6 +136,27 @@ function mostrarRevisiones() {
     });
 }
 
+function mostrarMultas() {
+    const contenedor = document.getElementById('listaMultas');
+    if (!contenedor) return;
+    contenedor.innerHTML = '';
+    multas.forEach((multa, index) => {
+        const div = document.createElement('div');
+        div.className = 'bg-gray-50 p-4 rounded-lg mb-2';
+        const estadoClase = multa.estado === 'pagada' ? 'text-green-600' : 'text-yellow-600';
+        div.innerHTML = `
+            <p class="font-bold">${multa.clienteNombre} (CI: ${multa.clienteCI})</p>
+            <p>Vehículo: ${multa.vehiculo}</p>
+            <p>Motivo: ${multa.motivo}</p>
+            <p>Monto: Bs. ${multa.monto}</p>
+            <p>Emitida por: ${multa.trabajador}</p>
+            <p class="${estadoClase}">Estado: ${multa.estado}</p>
+            ${multa.estado === 'pendiente' ? `<button class="bg-blue-500 text-white px-2 py-1 rounded mt-2" onclick="pagarMulta(${index})">Marcar como pagada</button>` : ''}
+        `;
+        contenedor.appendChild(div);
+    });
+}
+
 function toggleUserMenu() {
     const menu = document.getElementById('userMenu');
     if (menu) {
@@ -169,6 +195,22 @@ function mostrarNotificacion(mensaje) {
     }, 3500);
 }
 
+
+// Notificación visual al enviar formularios
+function mostrarNotificacion(mensaje) {
+    const contenedor = document.getElementById('alert-container');
+    if (!contenedor) return;
+
+    const alerta = document.createElement('div');
+    alerta.className = 'bg-green-100 text-green-800 rounded-md shadow px-4 py-3 mb-2';
+    alerta.textContent = mensaje;
+
+    contenedor.appendChild(alerta);
+
+    setTimeout(() => {
+        alerta.remove();
+    }, 3500);
+}
 
 // Funciones de formularios
 function actualizarSelectAutos() {
@@ -248,10 +290,11 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const clienteNombre = document.getElementById('multaClienteNombre').value;
             const clienteCI = document.getElementById('multaClienteCI').value;
+            const vehiculo = document.getElementById('multaVehiculo').value;
             const motivo = document.getElementById('motivoMulta').value;
             const monto = document.getElementById('montoMulta').value;
             const fecha = document.getElementById('fechaMulta').value;
-            registrarMulta(clienteCI, clienteNombre, motivo, monto, trabajadorActual.nombre, trabajadorActual.ci, fecha);
+            registrarMulta(clienteCI, clienteNombre, vehiculo, motivo, monto, trabajadorActual.nombre, trabajadorActual.ci, fecha);
             e.target.reset();
         });
     }
