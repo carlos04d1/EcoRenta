@@ -154,6 +154,22 @@ function rechazarSolicitudUI(indice) {
     rechazarSolicitud(indice, trabajadorActual.nombre, trabajadorActual.ci);
 }
 
+// Notificación visual al enviar formularios
+function mostrarNotificacion(mensaje) {
+    const contenedor = document.getElementById('alert-container');
+    if (!contenedor) return;
+
+    const alerta = document.createElement('div');
+    alerta.className = 'bg-green-100 text-green-800 rounded-md shadow px-4 py-3 mb-2';
+    alerta.textContent = mensaje;
+
+    contenedor.appendChild(alerta);
+
+    setTimeout(() => {
+        alerta.remove();
+    }, 3500);
+}
+
 // Funciones de formularios
 function actualizarSelectAutos() {
     const select = document.getElementById('autoSeleccionado');
@@ -186,6 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
             clienteActual = nombre;
             crearSolicitud(nombre, ci, autoId, fechaInicio, fechaFin);
             e.target.reset();
+            mostrarNotificacion('Tu reserva fue enviada correctamente. Por favor, espera la confirmación de un trabajador.');
         }
     });
 
