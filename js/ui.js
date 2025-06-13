@@ -157,6 +157,24 @@ function mostrarMultas() {
     });
 }
 
+function toggleTabs(seccion, mostrarId, boton) {
+    const contenedor = document.getElementById(seccion);
+    if (!contenedor) return;
+    const contenidos = contenedor.querySelectorAll('.tab-content');
+    contenidos.forEach(c => c.classList.add('hidden'));
+    const botones = contenedor.querySelectorAll('.tab-button');
+    botones.forEach(b => {
+        b.classList.remove('bg-blue-500', 'text-white');
+        b.classList.add('bg-gray-100');
+    });
+    const activo = contenedor.querySelector('#' + mostrarId);
+    if (activo) activo.classList.remove('hidden');
+    if (boton) {
+        boton.classList.remove('bg-gray-100');
+        boton.classList.add('bg-blue-500', 'text-white');
+    }
+}
+
 function toggleUserMenu() {
     const menu = document.getElementById('userMenu');
     if (menu) {
