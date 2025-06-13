@@ -181,7 +181,7 @@
                             <button class="tab-button bg-blue-500 text-white px-3 py-1 rounded" onclick="toggleTabs('multas','multaForm', this)">Crear multa</button>
                             <button class="tab-button bg-gray-100 px-3 py-1 rounded" onclick="toggleTabs('multas','multasSection', this)">Historial de multas</button>
                         </div>
-                        <form id="multaForm" class="tab-content flex flex-col space-y-4 flex-1 overflow-auto mb-4">
+                        <form id="multaForm" class="tab-content flex flex-col space-y-4 flex-1 mb-4">
                                 <div>
                                     <label class="block text-gray-700">Nombre Cliente</label>
                                     <input type="text" id="multaClienteNombre" class="w-full p-2 border rounded" required>
@@ -208,7 +208,7 @@
                                 </div>
                                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Crear Multa</button>
                             </form>
-                        <div id="multasSection" class="tab-content hidden flex-1 overflow-auto">
+                        <div id="multasSection" class="tab-content hidden flex-1">
                             <div id="listaMultas" class="space-y-2"></div>
                         </div>
                     </div>
