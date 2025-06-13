@@ -186,6 +186,22 @@ function toggleUserMenu() {
     }
 }
 
+function toggleAccordion(id, arrowId) {
+    const content = document.getElementById(id);
+    const arrow = document.getElementById(arrowId);
+    if (!content) return;
+    if (content.classList.contains('max-h-0')) {
+        content.classList.remove('max-h-0');
+        content.classList.add('max-h-screen');
+    } else {
+        content.classList.add('max-h-0');
+        content.classList.remove('max-h-screen');
+    }
+    if (arrow) {
+        arrow.classList.toggle('rotate-180');
+    }
+}
+
 function aprobarSolicitudUI(indice) {
     if (!trabajadorActual.nombre || !trabajadorActual.ci) {
         alert('Ingrese nombre y CI del trabajador');
