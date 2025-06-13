@@ -119,13 +119,162 @@ const rentasConfirmadas = [
     {
         id: 1,
         cliente: "Juan Pérez",
+        clienteCI: "123456",
         autoId: 1,
         fechaInicio: "2024-03-20T10:00",
         fechaFin: "2024-03-20T14:00",
+        trabajadorNombre: "Ana Torres",
+        trabajadorCI: "12345",
+        estado: "aprobado",
         total: 600
+    },
+    {
+        id: 2,
+        cliente: "María Gómez",
+        clienteCI: "234567",
+        autoId: 3,
+        fechaInicio: "2024-03-22T09:00",
+        fechaFin: "2024-03-22T15:00",
+        trabajadorNombre: "Luis López",
+        trabajadorCI: "98765",
+        estado: "aprobado",
+        total: 1728
+    },
+    {
+        id: 3,
+        cliente: "Carlos Sánchez",
+        clienteCI: "345678",
+        autoId: 10,
+        fechaInicio: "2024-03-25T08:00",
+        fechaFin: "2024-03-25T12:00",
+        trabajadorNombre: "Ana Torres",
+        trabajadorCI: "12345",
+        estado: "aprobado",
+        total: 640
+    },
+    {
+        id: 4,
+        cliente: "Laura Ruiz",
+        clienteCI: "456789",
+        autoId: 14,
+        fechaInicio: "2024-03-26T14:00",
+        fechaFin: "2024-03-26T18:00",
+        trabajadorNombre: "Luis López",
+        trabajadorCI: "98765",
+        estado: "aprobado",
+        total: 704
+    },
+    {
+        id: 5,
+        cliente: "Pedro Morales",
+        clienteCI: "567890",
+        autoId: 8,
+        fechaInicio: "2024-03-27T09:00",
+        fechaFin: "2024-03-27T17:00",
+        trabajadorNombre: "Ana Torres",
+        trabajadorCI: "12345",
+        estado: "aprobado",
+        total: 2432
     }
 ];
 
 const solicitudesPendientes = [];
-const revisionesVehiculo = [];
-const multas = [];
+const revisionesVehiculo = [
+    {
+        autoID: 1,
+        estadoAnterior: "Buen estado",
+        notas: "Sin observaciones",
+        trabajadorNombre: "Ana Torres",
+        trabajadorCI: "12345",
+        fechaRevision: "2024-03-01"
+    },
+    {
+        autoID: 3,
+        estadoAnterior: "Necesita limpieza",
+        notas: "Se sugirió lavado",
+        trabajadorNombre: "Luis López",
+        trabajadorCI: "98765",
+        fechaRevision: "2024-03-05"
+    },
+    {
+        autoID: 10,
+        estadoAnterior: "Rasguño leve",
+        notas: "Daño en puerta",
+        trabajadorNombre: "Ana Torres",
+        trabajadorCI: "12345",
+        fechaRevision: "2024-03-10"
+    },
+    {
+        autoID: 7,
+        estadoAnterior: "Buen estado",
+        notas: "Chequeo de rutina",
+        trabajadorNombre: "Luis López",
+        trabajadorCI: "98765",
+        fechaRevision: "2024-03-15"
+    },
+    {
+        autoID: 14,
+        estadoAnterior: "Neumáticos desgastados",
+        notas: "Próximo reemplazo",
+        trabajadorNombre: "Ana Torres",
+        trabajadorCI: "12345",
+        fechaRevision: "2024-03-18"
+    }
+];
+const multas = [
+    {
+        clienteCI: "123456",
+        clienteNombre: "Juan Pérez",
+        vehiculo: "Tesla Model 3",
+        motivo: "Exceso de velocidad",
+        monto: 150,
+        trabajador: "Ana Torres",
+        trabajadorCI: "12345",
+        fecha: "2024-03-20",
+        estado: "pendiente"
+    },
+    {
+        clienteCI: "234567",
+        clienteNombre: "María Gómez",
+        vehiculo: "Kia Ev9",
+        motivo: "Mal estacionamiento",
+        monto: 100,
+        trabajador: "Luis López",
+        trabajadorCI: "98765",
+        fecha: "2024-03-22",
+        estado: "pendiente"
+    },
+    {
+        clienteCI: "345678",
+        clienteNombre: "Carlos Sánchez",
+        vehiculo: "Toyota Accord Hybrid",
+        motivo: "Daños menores",
+        monto: 200,
+        trabajador: "Ana Torres",
+        trabajadorCI: "12345",
+        fecha: "2024-03-25",
+        estado: "pendiente"
+    },
+    {
+        clienteCI: "456789",
+        clienteNombre: "Laura Ruiz",
+        vehiculo: "Kia Sportage Hybrid",
+        motivo: "No devolver a tiempo",
+        monto: 250,
+        trabajador: "Luis López",
+        trabajadorCI: "98765",
+        fecha: "2024-03-26",
+        estado: "pendiente"
+    },
+    {
+        clienteCI: "567890",
+        clienteNombre: "Pedro Morales",
+        vehiculo: "BMW i4 M50",
+        motivo: "Uso no autorizado",
+        monto: 300,
+        trabajador: "Ana Torres",
+        trabajadorCI: "12345",
+        fecha: "2024-03-27",
+        estado: "pendiente"
+    }
+];
