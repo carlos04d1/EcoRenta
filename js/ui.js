@@ -179,6 +179,18 @@ function toggleTabs(seccion, mostrarId, boton) {
     }
 }
 
+function toggleAccordion(id) {
+    const contenedor = document.getElementById(id);
+    if (!contenedor) return;
+    if (contenedor.classList.contains('max-h-0')) {
+        contenedor.classList.remove('max-h-0');
+        contenedor.classList.add('max-h-screen');
+    } else {
+        contenedor.classList.add('max-h-0');
+        contenedor.classList.remove('max-h-screen');
+    }
+}
+
 function toggleUserMenu() {
     const menu = document.getElementById('userMenu');
     if (menu) {
