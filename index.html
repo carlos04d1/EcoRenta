@@ -114,7 +114,7 @@
 
         <!-- Panel de Trabajador -->
 
-        <div id="panelTrabajador" class="hidden h-screen overflow-hidden">
+        <div id="panelTrabajador" class="hidden h-screen overflow-y-auto">
             <div class="flex flex-col lg:flex-row gap-4 h-full">
                 <!-- Columna izquierda -->
                 <div id="solicitudes" class="lg:w-3/4 flex flex-col bg-white p-4 rounded border shadow h-full">
@@ -136,7 +136,7 @@
                 <!-- Columna derecha -->
 
                 <div class="lg:w-1/4 flex flex-col gap-4 h-full">
-                    <div id="trabajador" class="bg-white p-4 rounded border shadow h-[30%]">
+                    <div id="trabajador" class="bg-white p-4 rounded border shadow h-auto">
 
                         <form id="datosTrabajadorForm" class="space-y-4">
                             <div>
@@ -152,13 +152,13 @@
                     </div>
 
 
-                    <div id="revisiones" class="bg-white p-4 rounded border shadow flex flex-col h-[35%]">
+                    <div id="revisiones" class="bg-white p-4 rounded border shadow flex flex-col h-auto">
 
                         <div class="flex gap-2 mb-4">
                             <button class="tab-button bg-blue-500 text-white px-3 py-1 rounded" onclick="toggleTabs('revisiones','revisionForm', this)">Registrar revisión</button>
                             <button class="tab-button bg-gray-100 px-3 py-1 rounded" onclick="toggleTabs('revisiones','revisionesHistorial', this)">Historial de revisiones</button>
                         </div>
-                        <form id="revisionForm" class="tab-content flex flex-col space-y-4 flex-1 overflow-auto mb-4">
+                        <form id="revisionForm" class="tab-content flex flex-col space-y-4 mb-4 h-auto">
                             <div>
                                 <label class="block text-gray-700">Auto</label>
                                 <select id="revisionAuto" class="w-full p-2 border rounded" required></select>
@@ -183,14 +183,14 @@
                     </div>
 
 
-                    <div id="multas" class="bg-white p-4 rounded border shadow flex flex-col h-[35%]">
+                    <div id="multas" class="bg-white p-4 rounded border shadow flex flex-col h-auto">
 
                         <div class="flex gap-2 mb-4">
                             <button class="tab-button bg-blue-500 text-white px-3 py-1 rounded" onclick="toggleTabs('multas','multaForm', this)">Crear multa</button>
                             <button class="tab-button bg-gray-100 px-3 py-1 rounded" onclick="toggleTabs('multas','multasSection', this)">Historial de multas</button>
                         </div>
 
-                        <form id="multaForm" class="tab-content flex flex-col space-y-4 flex-1 overflow-auto mb-4">
+                        <form id="multaForm" class="tab-content flex flex-col space-y-4 mb-4 h-auto">
 
                                 <div>
                                     <label class="block text-gray-700">Nombre Cliente</label>
