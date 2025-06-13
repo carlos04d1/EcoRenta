@@ -152,76 +152,82 @@
                     </div>
 
 
-                    <div id="revisiones" class="bg-white p-4 rounded border shadow flex flex-col h-auto">
+                    <div class="border rounded shadow">
+                        <div onclick="toggleAccordion('revisiones')" class="bg-gray-100 rounded cursor-pointer p-3 font-semibold shadow">Revisión</div>
+                        <div id="revisiones" class="max-h-0 overflow-hidden p-4 bg-white rounded-b transition-all duration-300 flex flex-col h-auto">
 
-                        <div class="flex gap-2 mb-4">
-                            <button class="tab-button bg-blue-500 text-white px-3 py-1 rounded" onclick="toggleTabs('revisiones','revisionForm', this)">Registrar revisión</button>
-                            <button class="tab-button bg-gray-100 px-3 py-1 rounded" onclick="toggleTabs('revisiones','revisionesHistorial', this)">Historial de revisiones</button>
-                        </div>
-                        <form id="revisionForm" class="tab-content flex flex-col space-y-4 mb-4 h-auto">
-                            <div>
-                                <label class="block text-gray-700">Auto</label>
-                                <select id="revisionAuto" class="w-full p-2 border rounded" required></select>
+                            <div class="flex gap-2 mb-4">
+                                <button class="tab-button bg-blue-500 text-white px-3 py-1 rounded" onclick="toggleTabs('revisiones','revisionForm', this)">Registrar revisión</button>
+                                <button class="tab-button bg-gray-100 px-3 py-1 rounded" onclick="toggleTabs('revisiones','revisionesHistorial', this)">Historial de revisiones</button>
                             </div>
-                            <div>
-                                <label class="block text-gray-700">Estado Anterior</label>
-                                <input type="text" id="estadoAnterior" class="w-full p-2 border rounded" required>
+                            <form id="revisionForm" class="tab-content flex flex-col space-y-4 mb-4 h-auto">
+                                <div>
+                                    <label class="block text-gray-700">Auto</label>
+                                    <select id="revisionAuto" class="w-full p-2 border rounded" required></select>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700">Estado Anterior</label>
+                                    <input type="text" id="estadoAnterior" class="w-full p-2 border rounded" required>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700">Notas</label>
+                                    <input type="text" id="notasRevision" class="w-full p-2 border rounded" required>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700">Fecha</label>
+                                    <input type="date" id="fechaRevision" class="w-full p-2 border rounded" required>
+                                </div>
+                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Registrar</button>
+                            </form>
+                            <div id="revisionesHistorial" class="tab-content hidden flex-1 overflow-auto">
+                                <div id="listaRevisiones" class="space-y-2"></div>
                             </div>
-                            <div>
-                                <label class="block text-gray-700">Notas</label>
-                                <input type="text" id="notasRevision" class="w-full p-2 border rounded" required>
-                            </div>
-                            <div>
-                                <label class="block text-gray-700">Fecha</label>
-                                <input type="date" id="fechaRevision" class="w-full p-2 border rounded" required>
-                            </div>
-                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Registrar</button>
-                        </form>
-                        <div id="revisionesHistorial" class="tab-content hidden flex-1 overflow-auto">
-                            <div id="listaRevisiones" class="space-y-2"></div>
                         </div>
                     </div>
 
 
-                    <div id="multas" class="bg-white p-4 rounded border shadow flex flex-col h-auto">
+                    <div class="border rounded shadow">
+                        <div onclick="toggleAccordion('multas')" class="bg-gray-100 rounded cursor-pointer p-3 font-semibold shadow">Multa</div>
+                        <div id="multas" class="max-h-0 overflow-hidden p-4 bg-white rounded-b transition-all duration-300 flex flex-col h-auto">
 
-                        <div class="flex gap-2 mb-4">
-                            <button class="tab-button bg-blue-500 text-white px-3 py-1 rounded" onclick="toggleTabs('multas','multaForm', this)">Crear multa</button>
-                            <button class="tab-button bg-gray-100 px-3 py-1 rounded" onclick="toggleTabs('multas','multasSection', this)">Historial de multas</button>
-                        </div>
+                            <div class="flex gap-2 mb-4">
+                                <button class="tab-button bg-blue-500 text-white px-3 py-1 rounded" onclick="toggleTabs('multas','multaForm', this)">Crear multa</button>
+                                <button class="tab-button bg-gray-100 px-3 py-1 rounded" onclick="toggleTabs('multas','multasSection', this)">Historial de multas</button>
+                            </div>
 
-                        <form id="multaForm" class="tab-content flex flex-col space-y-4 mb-4 h-auto">
+                            <form id="multaForm" class="tab-content flex flex-col space-y-4 mb-4 h-auto">
 
-                                <div>
-                                    <label class="block text-gray-700">Nombre Cliente</label>
-                                    <input type="text" id="multaClienteNombre" class="w-full p-2 border rounded" required>
-                                </div>
-                                <div>
-                                    <label class="block text-gray-700">CI Cliente</label>
-                                    <input type="text" id="multaClienteCI" class="w-full p-2 border rounded" required>
-                                </div>
-                                <div>
-                                    <label class="block text-gray-700">Vehículo</label>
-                                    <input type="text" id="multaVehiculo" class="w-full p-2 border rounded" required>
-                                </div>
-                                <div>
-                                    <label class="block text-gray-700">Motivo</label>
-                                    <input type="text" id="motivoMulta" class="w-full p-2 border rounded" required>
-                                </div>
-                                <div>
-                                    <label class="block text-gray-700">Monto</label>
-                                    <input type="number" id="montoMulta" class="w-full p-2 border rounded" required>
-                                </div>
-                                <div>
-                                    <label class="block text-gray-700">Fecha</label>
-                                    <input type="date" id="fechaMulta" class="w-full p-2 border rounded" required>
-                                </div>
-                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Crear Multa</button>
-                            </form>
+                                    <div>
+                                        <label class="block text-gray-700">Nombre Cliente</label>
+                                        <input type="text" id="multaClienteNombre" class="w-full p-2 border rounded" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700">CI Cliente</label>
+                                        <input type="text" id="multaClienteCI" class="w-full p-2 border rounded" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700">Vehículo</label>
+                                        <input type="text" id="multaVehiculo" class="w-full p-2 border rounded" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700">Motivo</label>
+                                        <input type="text" id="motivoMulta" class="w-full p-2 border rounded" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700">Monto</label>
+                                        <input type="number" id="montoMulta" class="w-full p-2 border rounded" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700">Fecha</label>
+                                        <input type="date" id="fechaMulta" class="w-full p-2 border rounded" required>
+                                    </div>
+                                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Crear Multa</button>
+                                </form>
 
-                        <div id="multasSection" class="tab-content hidden flex-1 overflow-auto">
+                            <div id="multasSection" class="tab-content hidden flex-1 overflow-auto">
 
-                            <div id="listaMultas" class="space-y-2"></div>
+                                <div id="listaMultas" class="space-y-2"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
