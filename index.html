@@ -113,90 +113,107 @@
         </div>
 
         <!-- Panel de Trabajador -->
-        <div id="panelTrabajador" class="hidden bg-white p-6 rounded-lg shadow-lg mb-8">
-            <h2 class="text-xl font-bold mb-4">Panel de Trabajador</h2>
+        <div id="panelTrabajador" class="hidden h-screen overflow-hidden">
+            <div class="flex flex-col lg:flex-row gap-4 h-full">
+                <!-- Columna izquierda -->
+                <div id="solicitudes" class="lg:w-3/4 flex flex-col bg-white p-4 rounded border shadow h-full">
+                    <div class="flex gap-2 mb-4">
+                        <button class="tab-button bg-blue-500 text-white px-3 py-1 rounded" onclick="toggleTabs('solicitudes','solicitudesPendientes', this)">Solicitudes pendientes</button>
+                        <button class="tab-button bg-gray-100 px-3 py-1 rounded" onclick="toggleTabs('solicitudes','historialRentas', this)">Historial de reservas</button>
+                    </div>
+                    <div id="solicitudesPendientes" class="tab-content flex flex-col flex-1 overflow-auto">
+                        <h3 class="font-bold mb-2">Solicitudes Pendientes</h3>
+                        <div id="listaSolicitudes" class="space-y-2 mb-6"></div>
+                    </div>
+                    <div id="historialRentas" class="tab-content hidden flex flex-col flex-1 overflow-auto">
+                        <h3 class="font-bold mb-2">Historial de Rentas</h3>
+                        <div id="listaRentas" class="space-y-4"></div>
+                    </div>
+                </div>
 
-            <form id="datosTrabajadorForm" class="space-y-4 mb-6">
-                <div>
-                    <label class="block text-gray-700">Nombre Trabajador</label>
-                    <input type="text" id="nombreTrabajador" class="w-full p-2 border rounded" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700">CI Trabajador</label>
-                    <input type="text" id="ciTrabajador" class="w-full p-2 border rounded" required>
-                </div>
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Guardar Datos</button>
-            </form>
+                <!-- Columna derecha -->
+                <div class="lg:w-1/4 flex flex-col gap-4 h-full">
+                    <div id="trabajador" class="bg-white p-4 rounded border shadow h-[30%]">
+                        <form id="datosTrabajadorForm" class="space-y-4">
+                            <div>
+                                <label class="block text-gray-700">Nombre Trabajador</label>
+                                <input type="text" id="nombreTrabajador" class="w-full p-2 border rounded" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700">CI Trabajador</label>
+                                <input type="text" id="ciTrabajador" class="w-full p-2 border rounded" required>
+                            </div>
+                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Guardar Datos</button>
+                        </form>
+                    </div>
 
-            <h3 class="font-bold mb-2">Solicitudes Pendientes</h3>
-            <div id="listaSolicitudes" class="space-y-2 mb-6"></div>
+                    <div id="revisiones" class="bg-white p-4 rounded border shadow flex flex-col h-[35%]">
+                        <div class="flex gap-2 mb-4">
+                            <button class="tab-button bg-blue-500 text-white px-3 py-1 rounded" onclick="toggleTabs('revisiones','revisionForm', this)">Registrar revisión</button>
+                            <button class="tab-button bg-gray-100 px-3 py-1 rounded" onclick="toggleTabs('revisiones','revisionesHistorial', this)">Historial de revisiones</button>
+                        </div>
+                        <form id="revisionForm" class="tab-content flex flex-col space-y-4 flex-1 overflow-auto mb-4">
+                            <div>
+                                <label class="block text-gray-700">Auto</label>
+                                <select id="revisionAuto" class="w-full p-2 border rounded" required></select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700">Estado Anterior</label>
+                                <input type="text" id="estadoAnterior" class="w-full p-2 border rounded" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700">Notas</label>
+                                <input type="text" id="notasRevision" class="w-full p-2 border rounded" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700">Fecha</label>
+                                <input type="date" id="fechaRevision" class="w-full p-2 border rounded" required>
+                            </div>
+                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Registrar</button>
+                        </form>
+                        <div id="revisionesHistorial" class="tab-content hidden flex-1 overflow-auto">
+                            <div id="listaRevisiones" class="space-y-2"></div>
+                        </div>
+                    </div>
 
-            <h3 class="font-bold mb-2">Registrar Revisión</h3>
-            <form id="revisionForm" class="space-y-4 mb-6">
-                <div>
-                    <label class="block text-gray-700">Auto</label>
-                    <select id="revisionAuto" class="w-full p-2 border rounded" required></select>
+                    <div id="multas" class="bg-white p-4 rounded border shadow flex flex-col h-[35%]">
+                        <div class="flex gap-2 mb-4">
+                            <button class="tab-button bg-blue-500 text-white px-3 py-1 rounded" onclick="toggleTabs('multas','multaForm', this)">Crear multa</button>
+                            <button class="tab-button bg-gray-100 px-3 py-1 rounded" onclick="toggleTabs('multas','multasSection', this)">Historial de multas</button>
+                        </div>
+                        <form id="multaForm" class="tab-content flex flex-col space-y-4 flex-1 overflow-auto mb-4">
+                                <div>
+                                    <label class="block text-gray-700">Nombre Cliente</label>
+                                    <input type="text" id="multaClienteNombre" class="w-full p-2 border rounded" required>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700">CI Cliente</label>
+                                    <input type="text" id="multaClienteCI" class="w-full p-2 border rounded" required>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700">Vehículo</label>
+                                    <input type="text" id="multaVehiculo" class="w-full p-2 border rounded" required>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700">Motivo</label>
+                                    <input type="text" id="motivoMulta" class="w-full p-2 border rounded" required>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700">Monto</label>
+                                    <input type="number" id="montoMulta" class="w-full p-2 border rounded" required>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700">Fecha</label>
+                                    <input type="date" id="fechaMulta" class="w-full p-2 border rounded" required>
+                                </div>
+                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Crear Multa</button>
+                            </form>
+                        <div id="multasSection" class="tab-content hidden flex-1 overflow-auto">
+                            <div id="listaMultas" class="space-y-2"></div>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-gray-700">Estado Anterior</label>
-                    <input type="text" id="estadoAnterior" class="w-full p-2 border rounded" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Notas</label>
-                    <input type="text" id="notasRevision" class="w-full p-2 border rounded" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Fecha</label>
-                    <input type="date" id="fechaRevision" class="w-full p-2 border rounded" required>
-                </div>
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Registrar</button>
-            </form>
-
-            <h3 class="font-bold mb-2">Registrar Multa</h3>
-            <form id="multaForm" class="space-y-4 mb-6">
-                <div>
-                    <label class="block text-gray-700">Nombre Cliente</label>
-                    <input type="text" id="multaClienteNombre" class="w-full p-2 border rounded" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700">CI Cliente</label>
-                    <input type="text" id="multaClienteCI" class="w-full p-2 border rounded" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Vehículo</label>
-                    <input type="text" id="multaVehiculo" class="w-full p-2 border rounded" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Motivo</label>
-                    <input type="text" id="motivoMulta" class="w-full p-2 border rounded" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Monto</label>
-                    <input type="number" id="montoMulta" class="w-full p-2 border rounded" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Fecha</label>
-                    <input type="date" id="fechaMulta" class="w-full p-2 border rounded" required>
-                </div>
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Crear Multa</button>
-            </form>
-
-            <h3 class="font-bold mb-2">Historial de Revisiones</h3>
-            <div id="listaRevisiones" class="space-y-2"></div>
-        </div>
-
-        <!-- Historial de Rentas -->
-        <div id="historialRentas" class="bg-white p-6 rounded-lg shadow-lg">
-            <h2 class="text-xl font-bold mb-4">Historial de Rentas</h2>
-            <div id="listaRentas" class="space-y-4">
-                <!-- Las rentas se generarán dinámicamente -->
             </div>
-        </div>
-
-        <!-- Listado de Multas -->
-        <div id="multasSection" class="hidden bg-white p-6 rounded-lg shadow-lg mt-8">
-            <h2 class="text-xl font-bold mb-4">Multas Registradas</h2>
-            <div id="listaMultas" class="space-y-2"></div>
         </div>
     </main>
 
