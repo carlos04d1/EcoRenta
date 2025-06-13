@@ -14,12 +14,16 @@ function actualizarVisibilidad() {
     const panelTrabajador = document.getElementById('panelTrabajador');
     const multasSection = document.getElementById('multasSection');
     const filtros = document.getElementById('filtros');
+    const listaAutos = document.getElementById('listaAutos');
 
     // Mostrar/ocultar elementos según el rol
     formularioAlquiler.style.display = rolActual === 'cliente' ? 'block' : 'none';
     panelAdmin.style.display = rolActual === 'admin' ? 'block' : 'none';
     panelTrabajador.style.display = rolActual === 'trabajador' || rolActual === 'admin' ? 'block' : 'none';
-    filtros.style.display = rolActual !== 'admin' ? 'block' : 'none';
+    filtros.style.display = rolActual === 'cliente' ? 'block' : 'none';
+    if (listaAutos) {
+        listaAutos.style.display = rolActual === 'cliente' || rolActual === 'admin' ? 'grid' : 'none';
+    }
     if (multasSection) {
         multasSection.style.display = rolActual === 'trabajador' || rolActual === 'admin' ? 'block' : 'none';
     }
@@ -197,23 +201,6 @@ function rechazarSolicitudUI(indice) {
     }
     rechazarSolicitud(indice, trabajadorActual.nombre, trabajadorActual.ci);
 }
-// Notificación visual al enviar formularios
-function mostrarNotificacion(mensaje) {
-    const contenedor = document.getElementById('alert-container');
-    if (!contenedor) return;
-
-    const alerta = document.createElement('div');
-    alerta.className = 'bg-green-100 text-green-800 rounded-md shadow px-4 py-3 mb-2';
-    alerta.textContent = mensaje;
-
-    contenedor.appendChild(alerta);
-
-    setTimeout(() => {
-        alerta.remove();
-    }, 3500);
-}
-
-
 // Notificación visual al enviar formularios
 function mostrarNotificacion(mensaje) {
     const contenedor = document.getElementById('alert-container');
