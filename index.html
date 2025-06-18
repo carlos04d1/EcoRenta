@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,234 +9,114 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
-
-<body class="bg-gray-100 font-roboto">
-    <div id="alert-container" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50"></div>
-    <!-- Selector de Rol -->
-    <header class="bg-blue-500 text-white p-4">
-        <div class="container mx-auto flex items-center">
-            <h1 class="text-2xl font-bold mb-4">EcoRenta Bolivia</h1>
-            <div class="relative ml-auto">
-                <button id="userMenuButton" onclick="toggleUserMenu()" class="text-white">
-                    <i class="fas fa-user text-2xl"></i>
-                </button>
-                <div id="userMenu" class="hidden absolute right-0 mt-2 w-40 bg-white text-gray-700 rounded shadow">
-                    <ul>
-                        <li><button onclick="setRole('cliente')"
-                                class="block w-full text-left px-4 py-2 hover:bg-gray-100">Cliente</button></li>
-                        <li><button onclick="setRole('trabajador')"
-                                class="block w-full text-left px-4 py-2 hover:bg-gray-100">Trabajador</button></li>
-                        <li><button onclick="setRole('admin')"
-                                class="block w-full text-left px-4 py-2 hover:bg-gray-100">Admin</button></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+<body class="bg-white font-roboto">
+    <!-- Header -->
+    <header class="bg-white shadow">
+        <nav class="container mx-auto flex justify-between items-center py-4">
+            <div class="text-2xl font-semibold text-gray-700">EcoRenta Bolivia</div>
+            <ul class="flex gap-6 font-semibold text-gray-700">
+                <li><a href="#inicio" class="hover:text-violet-600">Inicio</a></li>
+                <li><a href="#autos" class="hover:text-violet-600">Autos</a></li>
+                <li><a href="#contacto" class="hover:text-violet-600">Contacto</a></li>
+                <li><a href="#" class="hover:text-violet-600">Iniciar sesi&oacute;n</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <main class="container mx-auto p-4">
-        <!-- Filtros -->
-        <div id="filtros" class="mb-6">
-            <div class="flex gap-4">
-                <button onclick="filtrarAutos('todos')"
-                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Todos</button>
-                <button onclick="filtrarAutos('electrico')"
-                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Eléctricos</button>
-                <button onclick="filtrarAutos('hibrido')"
-                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Híbridos</button>
-            </div>
-        </div>
-
-        <!-- Listado de Autos -->
-        <div id="listaAutos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            <!-- Las tarjetas de autos se generarán dinámicamente -->
-        </div>
-
-        <!-- Formulario de Alquiler (solo para clientes) -->
-        <div id="formularioAlquiler" class="hidden bg-white p-6 rounded-lg shadow-lg mb-8">
-            <h2 class="text-xl font-bold mb-4">Alquilar Auto</h2>
-            <form id="alquilerForm" class="space-y-4">
-                <div>
-                    <label class="block text-gray-700">Nombre</label>
-                    <input type="text" id="nombreCliente" class="w-full p-2 border rounded" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Carnet de Identidad</label>
-                    <input type="text" id="ciCliente" class="w-full p-2 border rounded" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Auto</label>
-                    <select id="autoSeleccionado" class="w-full p-2 border rounded" required></select>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Fecha y Hora Inicio</label>
-                    <input type="datetime-local" id="fechaInicio" class="w-full p-2 border rounded" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700">Fecha y Hora Fin</label>
-                    <input type="datetime-local" id="fechaFin" class="w-full p-2 border rounded" required>
-                </div>
-                <button type="submit"
-                    class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">Alquilar</button>
+    <!-- Hero con buscador -->
+    <section id="inicio" class="relative bg-gray-100">
+        <img src="https://images.unsplash.com/photo-1618675521515-f730729cbe7a" alt="Hero" class="absolute inset-0 w-full h-full object-cover opacity-40">
+        <div class="container mx-auto relative py-20 text-center">
+            <h1 class="text-3xl md:text-5xl font-semibold text-gray-700 mb-6">Encuentra tu pr&oacute;ximo auto el&eacute;ctrico</h1>
+            <form class="bg-white bg-opacity-90 rounded-xl p-6 flex flex-col md:flex-row md:items-end gap-4 max-w-4xl mx-auto" onsubmit="event.preventDefault()">
+                <input type="text" placeholder="Ciudad" class="flex-1 border rounded px-3 py-2" />
+                <input type="date" placeholder="Fecha inicio" class="flex-1 border rounded px-3 py-2" />
+                <input type="date" placeholder="Fecha fin" class="flex-1 border rounded px-3 py-2" />
+                <input type="time" placeholder="Hora" class="flex-1 border rounded px-3 py-2" />
+                <button class="bg-violet-600 text-white rounded-full px-6 py-3">Buscar</button>
             </form>
         </div>
+    </section>
 
-        <!-- Panel de Admin -->
-        <div id="panelAdmin" class="hidden bg-white p-6 rounded-lg shadow-lg mb-8">
-            <h2 class="text-xl font-bold mb-4">Panel de Administración</h2>
-            <form id="agregarAutoForm" class="space-y-4 mb-6">
-                <div>
-                    <label class="block text-gray-700">Nombre del Auto</label>
-                    <input type="text" id="nombreAuto" class="w-full p-2 border rounded" required>
+    <!-- Por que EcoRenta -->
+    <section class="bg-white py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-10">&iquest;Por qu&eacute; EcoRenta?</h2>
+            <div class="grid gap-8 md:grid-cols-3">
+                <div class="flex flex-col items-center">
+                    <svg class="w-12 h-12 text-violet-600 mb-4" fill="currentColor" viewBox="0 0 20 20"><path d="M11.3 1.046A8 8 0 102.02 14.688l-.015.012a1 1 0 001.47 1.352l.016-.014A8 8 0 1011.3 1.046z" /></svg>
+                    <p class="font-semibold text-gray-700">Sin gasolina</p>
                 </div>
-                <div>
-                    <label class="block text-gray-700">Tipo</label>
-                    <select id="tipoAuto" class="w-full p-2 border rounded" required>
-                        <option value="electrico">Eléctrico</option>
-                        <option value="hibrido">Híbrido</option>
-                    </select>
+                <div class="flex flex-col items-center">
+                    <svg class="w-12 h-12 text-violet-600 mb-4" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H5z" /></svg>
+                    <p class="font-semibold text-gray-700">Reservas f&aacute;ciles</p>
                 </div>
-                <div>
-                    <label class="block text-gray-700">Precio por Hora (Bs)</label>
-                    <input type="number" id="precioAuto" class="w-full p-2 border rounded" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700">URL de la Imagen</label>
-                    <input type="url" id="imagenAuto" class="w-full p-2 border rounded" required>
-                </div>
-                <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">Agregar
-                    Auto</button>
-            </form>
-            <button onclick="reiniciarDisponibilidad()"
-                class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600">Reiniciar Disponibilidad</button>
-        </div>
-
-        <!-- Panel de Trabajador -->
-
-        <div id="panelTrabajador" class="hidden h-screen overflow-y-auto">
-            <div class="flex flex-col lg:flex-row gap-4 h-full">
-                <!-- Columna izquierda -->
-                <div id="solicitudes" class="lg:w-3/4 flex flex-col bg-white p-4 rounded border shadow h-full">
-
-                    <div class="flex gap-2 mb-4">
-                        <button class="tab-button bg-blue-500 text-white px-3 py-1 rounded" onclick="toggleTabs('solicitudes','solicitudesPendientes', this)">Solicitudes pendientes</button>
-                        <button class="tab-button bg-gray-100 px-3 py-1 rounded" onclick="toggleTabs('solicitudes','historialRentas', this)">Historial de reservas</button>
-                    </div>
-                    <div id="solicitudesPendientes" class="tab-content flex flex-col flex-1 overflow-auto">
-                        <h3 class="font-bold mb-2">Solicitudes Pendientes</h3>
-                        <div id="listaSolicitudes" class="space-y-2 mb-6"></div>
-                    </div>
-                    <div id="historialRentas" class="tab-content hidden flex flex-col flex-1 overflow-auto">
-                        <h3 class="font-bold mb-2">Historial de Rentas</h3>
-                        <div id="listaRentas" class="space-y-4"></div>
-                    </div>
-                </div>
-
-                <!-- Columna derecha -->
-
-                <div class="lg:w-1/4 flex flex-col gap-4 h-full">
-                    <div id="trabajador" class="bg-white p-4 rounded border shadow h-auto">
-
-                        <form id="datosTrabajadorForm" class="space-y-4">
-                            <div>
-                                <label class="block text-gray-700">Nombre Trabajador</label>
-                                <input type="text" id="nombreTrabajador" class="w-full p-2 border rounded" required>
-                            </div>
-                            <div>
-                                <label class="block text-gray-700">CI Trabajador</label>
-                                <input type="text" id="ciTrabajador" class="w-full p-2 border rounded" required>
-                            </div>
-                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Guardar Datos</button>
-                        </form>
-                    </div>
-
-
-                    <div class="border rounded shadow">
-                        <div onclick="toggleAccordion('revisiones')" class="bg-gray-100 rounded cursor-pointer p-3 font-semibold shadow">Revisión</div>
-                        <div id="revisiones" class="max-h-0 overflow-hidden p-4 bg-white rounded-b transition-all duration-300 flex flex-col h-auto">
-
-                            <div class="flex gap-2 mb-4">
-                                <button class="tab-button bg-blue-500 text-white px-3 py-1 rounded" onclick="toggleTabs('revisiones','revisionForm', this)">Registrar revisión</button>
-                                <button class="tab-button bg-gray-100 px-3 py-1 rounded" onclick="toggleTabs('revisiones','revisionesHistorial', this)">Historial de revisiones</button>
-                            </div>
-                            <form id="revisionForm" class="tab-content flex flex-col space-y-4 mb-4 h-auto">
-                                <div>
-                                    <label class="block text-gray-700">Auto</label>
-                                    <select id="revisionAuto" class="w-full p-2 border rounded" required></select>
-                                </div>
-                                <div>
-                                    <label class="block text-gray-700">Estado Anterior</label>
-                                    <input type="text" id="estadoAnterior" class="w-full p-2 border rounded" required>
-                                </div>
-                                <div>
-                                    <label class="block text-gray-700">Notas</label>
-                                    <input type="text" id="notasRevision" class="w-full p-2 border rounded" required>
-                                </div>
-                                <div>
-                                    <label class="block text-gray-700">Fecha</label>
-                                    <input type="date" id="fechaRevision" class="w-full p-2 border rounded" required>
-                                </div>
-                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Registrar</button>
-                            </form>
-                            <div id="revisionesHistorial" class="tab-content hidden flex-1 overflow-auto">
-                                <div id="listaRevisiones" class="space-y-2"></div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="border rounded shadow">
-                        <div onclick="toggleAccordion('multas')" class="bg-gray-100 rounded cursor-pointer p-3 font-semibold shadow">Multa</div>
-                        <div id="multas" class="max-h-0 overflow-hidden p-4 bg-white rounded-b transition-all duration-300 flex flex-col h-auto">
-
-                            <div class="flex gap-2 mb-4">
-                                <button class="tab-button bg-blue-500 text-white px-3 py-1 rounded" onclick="toggleTabs('multas','multaForm', this)">Crear multa</button>
-                                <button class="tab-button bg-gray-100 px-3 py-1 rounded" onclick="toggleTabs('multas','multasSection', this)">Historial de multas</button>
-                            </div>
-
-                            <form id="multaForm" class="tab-content flex flex-col space-y-4 mb-4 h-auto">
-
-                                    <div>
-                                        <label class="block text-gray-700">Nombre Cliente</label>
-                                        <input type="text" id="multaClienteNombre" class="w-full p-2 border rounded" required>
-                                    </div>
-                                    <div>
-                                        <label class="block text-gray-700">CI Cliente</label>
-                                        <input type="text" id="multaClienteCI" class="w-full p-2 border rounded" required>
-                                    </div>
-                                    <div>
-                                        <label class="block text-gray-700">Vehículo</label>
-                                        <input type="text" id="multaVehiculo" class="w-full p-2 border rounded" required>
-                                    </div>
-                                    <div>
-                                        <label class="block text-gray-700">Motivo</label>
-                                        <input type="text" id="motivoMulta" class="w-full p-2 border rounded" required>
-                                    </div>
-                                    <div>
-                                        <label class="block text-gray-700">Monto</label>
-                                        <input type="number" id="montoMulta" class="w-full p-2 border rounded" required>
-                                    </div>
-                                    <div>
-                                        <label class="block text-gray-700">Fecha</label>
-                                        <input type="date" id="fechaMulta" class="w-full p-2 border rounded" required>
-                                    </div>
-                                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Crear Multa</button>
-                                </form>
-
-                            <div id="multasSection" class="tab-content hidden flex-1 overflow-auto">
-
-                                <div id="listaMultas" class="space-y-2"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="flex flex-col items-center">
+                    <svg class="w-12 h-12 text-violet-600 mb-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM3 12a9 9 0 0112-8.485V8h2V3.515A9 9 0 0121 12h-5v2h5a9 9 0 01-6 8.485V16h-2v5.485A9 9 0 013 12z"/></svg>
+                    <p class="font-semibold text-gray-700">Soporte local</p>
                 </div>
             </div>
         </div>
-    </main>
+    </section>
+
+    <!-- Carrusel de autos -->
+    <section id="autos" class="bg-gray-50 py-16">
+        <div class="container mx-auto">
+            <h2 class="text-2xl font-semibold text-gray-700 text-center mb-8">Nuestros Autos</h2>
+            <div id="listaAutos" class="flex overflow-x-auto gap-6 pb-4"></div>
+        </div>
+    </section>
+
+    <!-- Filtros por tipo -->
+    <section class="bg-white py-12">
+        <div class="container mx-auto text-center">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-6">Explora por tipo</h2>
+            <div class="flex justify-center gap-4" id="filtros">
+                <button onclick="filtrar('todos')" class="px-4 py-2 bg-violet-600 text-white rounded-full">Todos</button>
+                <button onclick="filtrar('electrico')" class="px-4 py-2 bg-gray-200 rounded-full hover:bg-gray-300">El&eacute;ctricos</button>
+                <button onclick="filtrar('hibrido')" class="px-4 py-2 bg-gray-200 rounded-full hover:bg-gray-300">H&iacute;bridos</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bg-slate-100 py-16 text-center">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">Reserva tu auto ahora</h2>
+        <a href="#autos" class="inline-block bg-violet-600 text-white rounded-full px-6 py-3">Ver disponibilidad</a>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacto" class="bg-gray-800 text-gray-100 py-12">
+        <div class="container mx-auto grid md:grid-cols-3 gap-8">
+            <div>
+                <h3 class="font-semibold text-lg mb-4">Nosotros</h3>
+                <p class="text-gray-400">Alquiler de autos el&eacute;ctricos e h&iacute;bridos en Bolivia.</p>
+            </div>
+            <div>
+                <h3 class="font-semibold text-lg mb-4">Soporte</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li><a href="#" class="hover:text-white">FAQs</a></li>
+                    <li><a href="#" class="hover:text-white">Ayuda</a></li>
+                    <li><a href="#" class="hover:text-white">Contacto</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold text-lg mb-4">Descarga la app</h3>
+                <div class="flex gap-4 mb-4">
+                    <a href="#" class="bg-gray-700 px-4 py-2 rounded-lg">App Store</a>
+                    <a href="#" class="bg-gray-700 px-4 py-2 rounded-lg">Google Play</a>
+                </div>
+                <div class="flex gap-4 text-xl">
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="mt-8 text-center text-gray-500">&copy; 2024 EcoRenta Bolivia</div>
+    </footer>
 
     <script src="js/data.js"></script>
-    <script src="js/logic.js"></script>
-    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
 </body>
-
 </html>
