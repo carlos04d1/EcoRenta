@@ -2,6 +2,7 @@
 function actualizarVista() {
     actualizarVisibilidad();
     mostrarAutos(autos);
+    filtrarAutos(typeof filtroActual !== 'undefined' ? filtroActual : 'todos');
     mostrarRentas();
     mostrarSolicitudes();
     mostrarRevisiones();
@@ -45,7 +46,8 @@ function mostrarAutos(autosAMostrar) {
 
 function crearTarjetaAuto(auto) {
     const div = document.createElement('div');
-    div.className = 'bg-white rounded-lg shadow-lg overflow-hidden';
+    div.className = 'bg-white rounded-lg shadow-lg overflow-hidden transition-opacity';
+    div.dataset.tipo = auto.tipo;
     
     div.innerHTML = `
         <img src="${auto.imagen}" alt="${auto.nombre}" class="w-full h-48 object-cover">

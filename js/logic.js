@@ -2,6 +2,7 @@
 let rolActual = 'cliente';
 let clienteActual = '';
 let trabajadorActual = { nombre: '', ci: '' };
+let filtroActual = 'todos';
 
 // Funciones de manejo de roles
 function cambiarRol(rol) {
@@ -19,10 +20,16 @@ function setRole(rol) {
 
 // Funciones de filtrado
 function filtrarAutos(tipo) {
-    const autosFiltrados = tipo === 'todos' 
-        ? autos 
-        : autos.filter(auto => auto.tipo === tipo);
-    mostrarAutos(autosFiltrados);
+    filtroActual = tipo;
+    const cards = document.querySelectorAll('#listaAutos > div');
+    cards.forEach(card => {
+        if (tipo === 'todos' || card.dataset.tipo === tipo) {
+            card.classList.remove('hidden', 'opacity-0');
+        } else {
+            card.classList.add('opacity-0');
+            setTimeout(() => card.classList.add('hidden'), 200);
+        }
+    });
 }
 
 // Funciones de alquiler
