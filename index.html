@@ -13,38 +13,67 @@
 
 <body class="bg-gray-100 font-roboto">
     <div id="alert-container" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50"></div>
-    <!-- Selector de Rol -->
-    <header class="bg-blue-500 text-white p-4">
-        <div class="container mx-auto flex items-center">
-            <h1 class="text-2xl font-bold mb-4">EcoRenta Bolivia</h1>
-            <div class="relative ml-auto">
-                <button id="userMenuButton" onclick="toggleUserMenu()" class="text-white">
-                    <i class="fas fa-user text-2xl"></i>
-                </button>
-                <div id="userMenu" class="hidden absolute right-0 mt-2 w-40 bg-white text-gray-700 rounded shadow">
-                    <ul>
-                        <li><button onclick="setRole('cliente')"
-                                class="block w-full text-left px-4 py-2 hover:bg-gray-100">Cliente</button></li>
-                        <li><button onclick="setRole('trabajador')"
-                                class="block w-full text-left px-4 py-2 hover:bg-gray-100">Trabajador</button></li>
-                        <li><button onclick="setRole('admin')"
-                                class="block w-full text-left px-4 py-2 hover:bg-gray-100">Admin</button></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <header class="fixed top-0 left-0 w-full bg-white shadow z-50">
+        <nav class="container mx-auto flex items-center justify-between py-4">
+            <h1 class="text-violet-600 text-2xl font-bold tracking-wide">EcoRenta Bolivia</h1>
+            <ul class="hidden md:flex gap-6 font-semibold text-gray-700">
+                <li><a href="#inicio" class="hover:text-violet-600">Inicio</a></li>
+                <li><a href="#autos" class="hover:text-violet-600">Autos</a></li>
+                <li><a href="#reserva" class="hover:text-violet-600">Reserva</a></li>
+            </ul>
+            <a href="perfil.html" class="bg-violet-600 text-white px-4 py-2 rounded-full shadow hover:bg-violet-700">Perfil</a>
+        </nav>
     </header>
 
-    <main class="container mx-auto p-4">
+    <div class="pt-20"></div>
+
+    <section id="inicio" class="relative h-[400px] overflow-hidden rounded-b-xl mb-10">
+        <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a" alt="Auto" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="relative z-10 flex items-center justify-center h-full">
+            <form id="heroSearch" class="bg-white/70 backdrop-blur p-6 rounded-xl flex flex-col md:flex-row gap-4 animate-fade-in delay-200">
+                <select id="tipoBusqueda" class="p-2 rounded-md border" >
+                    <option value="ambos">Ambos</option>
+                    <option value="electrico">Eléctrico</option>
+                    <option value="hibrido">Híbrido</option>
+                </select>
+                <input type="datetime-local" id="heroInicio" class="p-2 rounded-md border">
+                <input type="datetime-local" id="heroFin" class="p-2 rounded-md border">
+                <button class="bg-violet-600 text-white px-6 py-2 rounded-full shadow hover:scale-105 active:scale-95 transition-transform">Buscar</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="py-12 container mx-auto" id="porque">
+        <h2 class="text-2xl font-semibold text-center mb-8">¿Por qué EcoRenta?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded-xl shadow hover:bg-violet-50 hover:scale-105 transition text-center">
+                <svg class="w-12 h-12 mx-auto text-violet-600 mb-4" fill="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                <p class="font-semibold">Flota ecológica</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow hover:bg-violet-50 hover:scale-105 transition text-center">
+                <svg class="w-12 h-12 mx-auto text-violet-600 mb-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 6v6l4 2"/></svg>
+                <p class="font-semibold">Reserva rápida</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow hover:bg-violet-50 hover:scale-105 transition text-center">
+                <svg class="w-12 h-12 mx-auto text-violet-600 mb-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 8c-4.418 0-8 1.79-8 4v6h16v-6c0-2.21-3.582-4-8-4z"/></svg>
+                <p class="font-semibold">Soporte 24/7</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="autos" class="py-12 bg-white">
+        <h2 class="text-2xl font-semibold text-center mb-4">Autos Destacados</h2>
+        <div id="destacados" class="flex overflow-x-auto gap-4 snap-x scroll-smooth px-4"></div>
+    </section>
+
+    <main id="reserva" class="container mx-auto p-4">
         <!-- Filtros -->
         <div id="filtros" class="mb-6">
-            <div class="flex gap-4">
-                <button onclick="filtrarAutos('todos')"
-                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Todos</button>
-                <button onclick="filtrarAutos('electrico')"
-                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Eléctricos</button>
-                <button onclick="filtrarAutos('hibrido')"
-                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Híbridos</button>
+            <div class="flex gap-2">
+                <button onclick="filtrarAutos('todos')" class="bg-violet-600 text-white px-4 py-2 rounded-full shadow hover:bg-violet-700 transition">Todos</button>
+                <button onclick="filtrarAutos('electrico')" class="bg-violet-600 text-white px-4 py-2 rounded-full shadow hover:bg-violet-700 transition">Eléctricos</button>
+                <button onclick="filtrarAutos('hibrido')" class="bg-violet-600 text-white px-4 py-2 rounded-full shadow hover:bg-violet-700 transition">Híbridos</button>
             </div>
         </div>
 
@@ -77,8 +106,7 @@
                     <label class="block text-gray-700">Fecha y Hora Fin</label>
                     <input type="datetime-local" id="fechaFin" class="w-full p-2 border rounded" required>
                 </div>
-                <button type="submit"
-                    class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">Alquilar</button>
+                <button type="submit" class="bg-violet-600 text-white px-6 py-2 rounded-full shadow hover:bg-violet-700 transition">Alquilar</button>
             </form>
         </div>
 
@@ -105,7 +133,7 @@
                     <label class="block text-gray-700">URL de la Imagen</label>
                     <input type="url" id="imagenAuto" class="w-full p-2 border rounded" required>
                 </div>
-                <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">Agregar
+                <button type="submit" class="bg-violet-600 text-white px-6 py-2 rounded hover:bg-violet-700">Agregar
                     Auto</button>
             </form>
             <button onclick="reiniciarDisponibilidad()"
@@ -120,7 +148,7 @@
                 <div id="solicitudes" class="lg:w-3/4 flex flex-col bg-white p-4 rounded border shadow h-full">
 
                     <div class="flex gap-2 mb-4">
-                        <button class="tab-button bg-blue-500 text-white px-3 py-1 rounded" onclick="toggleTabs('solicitudes','solicitudesPendientes', this)">Solicitudes pendientes</button>
+                        <button class="tab-button bg-violet-600 text-white px-3 py-1 rounded" onclick="toggleTabs('solicitudes','solicitudesPendientes', this)">Solicitudes pendientes</button>
                         <button class="tab-button bg-gray-100 px-3 py-1 rounded" onclick="toggleTabs('solicitudes','historialRentas', this)">Historial de reservas</button>
                     </div>
                     <div id="solicitudesPendientes" class="tab-content flex flex-col flex-1 overflow-auto">
@@ -147,7 +175,7 @@
                                 <label class="block text-gray-700">CI Trabajador</label>
                                 <input type="text" id="ciTrabajador" class="w-full p-2 border rounded" required>
                             </div>
-                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Guardar Datos</button>
+                            <button type="submit" class="bg-violet-600 text-white px-4 py-2 rounded">Guardar Datos</button>
                         </form>
                     </div>
 
@@ -157,7 +185,7 @@
                         <div id="revisiones" class="max-h-0 overflow-hidden p-4 bg-white rounded-b transition-all duration-300 flex flex-col h-auto">
 
                             <div class="flex gap-2 mb-4">
-                                <button class="tab-button bg-blue-500 text-white px-3 py-1 rounded" onclick="toggleTabs('revisiones','revisionForm', this)">Registrar revisión</button>
+                                <button class="tab-button bg-violet-600 text-white px-3 py-1 rounded" onclick="toggleTabs('revisiones','revisionForm', this)">Registrar revisión</button>
                                 <button class="tab-button bg-gray-100 px-3 py-1 rounded" onclick="toggleTabs('revisiones','revisionesHistorial', this)">Historial de revisiones</button>
                             </div>
                             <form id="revisionForm" class="tab-content flex flex-col space-y-4 mb-4 h-auto">
@@ -177,7 +205,7 @@
                                     <label class="block text-gray-700">Fecha</label>
                                     <input type="date" id="fechaRevision" class="w-full p-2 border rounded" required>
                                 </div>
-                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Registrar</button>
+                                <button type="submit" class="bg-violet-600 text-white px-4 py-2 rounded">Registrar</button>
                             </form>
                             <div id="revisionesHistorial" class="tab-content hidden flex-1 overflow-auto">
                                 <div id="listaRevisiones" class="space-y-2"></div>
@@ -191,7 +219,7 @@
                         <div id="multas" class="max-h-0 overflow-hidden p-4 bg-white rounded-b transition-all duration-300 flex flex-col h-auto">
 
                             <div class="flex gap-2 mb-4">
-                                <button class="tab-button bg-blue-500 text-white px-3 py-1 rounded" onclick="toggleTabs('multas','multaForm', this)">Crear multa</button>
+                                <button class="tab-button bg-violet-600 text-white px-3 py-1 rounded" onclick="toggleTabs('multas','multaForm', this)">Crear multa</button>
                                 <button class="tab-button bg-gray-100 px-3 py-1 rounded" onclick="toggleTabs('multas','multasSection', this)">Historial de multas</button>
                             </div>
 
@@ -221,7 +249,7 @@
                                         <label class="block text-gray-700">Fecha</label>
                                         <input type="date" id="fechaMulta" class="w-full p-2 border rounded" required>
                                     </div>
-                                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Crear Multa</button>
+                                    <button type="submit" class="bg-violet-600 text-white px-4 py-2 rounded">Crear Multa</button>
                                 </form>
 
                             <div id="multasSection" class="tab-content hidden flex-1 overflow-auto">
@@ -238,6 +266,26 @@
     <script src="js/data.js"></script>
     <script src="js/logic.js"></script>
     <script src="js/ui.js"></script>
+    <script>
+        document.getElementById('heroSearch').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const tipo = document.getElementById('tipoBusqueda').value;
+            filtrarAutos(tipo === 'ambos' ? 'todos' : tipo);
+            document.getElementById('reserva').scrollIntoView({behavior: 'smooth'});
+        });
+
+        function cargarDestacados() {
+            const destacados = [...autos].sort((a,b) => b.precioHora - a.precioHora).slice(0,6);
+            const cont = document.getElementById('destacados');
+            destacados.forEach(auto => {
+                const div = document.createElement('div');
+                div.className = 'min-w-[250px] snap-start bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl hover:scale-105 transition-all';
+                div.innerHTML = `<img src="${auto.imagen}" class="w-full h-40 object-cover"/><div class="p-4"><h3 class="font-semibold">${auto.nombre}</h3><p class="text-gray-500">Bs. ${auto.precioHora}/hora</p></div>`;
+                cont.appendChild(div);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', cargarDestacados);
+    </script>
 </body>
 
 </html>
