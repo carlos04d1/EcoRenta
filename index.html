@@ -64,16 +64,24 @@
 
     <section id="autos" class="py-12 bg-white">
         <h2 class="text-2xl font-semibold text-center mb-4">Autos Destacados</h2>
-        <div id="destacados" class="flex overflow-x-auto gap-4 snap-x scroll-smooth px-4"></div>
+        <div class="relative">
+            <button id="prevDest" class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow hidden md:block">
+                <i class="fa fa-chevron-left"></i>
+            </button>
+            <div id="destacados" class="overflow-hidden w-full flex"></div>
+            <button id="nextDest" class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow hidden md:block">
+                <i class="fa fa-chevron-right"></i>
+            </button>
+        </div>
     </section>
 
     <main id="reserva" class="container mx-auto p-4">
         <!-- Filtros -->
         <div id="filtros" class="mb-6">
             <div class="flex gap-2">
-                <button onclick="filtrarAutos('todos')" class="bg-violet-600 text-white px-4 py-2 rounded-full shadow hover:bg-violet-700 transition">Todos</button>
-                <button onclick="filtrarAutos('electrico')" class="bg-violet-600 text-white px-4 py-2 rounded-full shadow hover:bg-violet-700 transition">Eléctricos</button>
-                <button onclick="filtrarAutos('hibrido')" class="bg-violet-600 text-white px-4 py-2 rounded-full shadow hover:bg-violet-700 transition">Híbridos</button>
+                <button data-filter="todos" class="filter-btn bg-violet-600 text-white px-4 py-2 rounded-full shadow transition">Todos</button>
+                <button data-filter="electrico" class="filter-btn bg-gray-100 px-4 py-2 rounded-full shadow transition">Eléctricos</button>
+                <button data-filter="hibrido" class="filter-btn bg-gray-100 px-4 py-2 rounded-full shadow transition">Híbridos</button>
             </div>
         </div>
 
@@ -87,26 +95,41 @@
             <h2 class="text-xl font-bold mb-4">Alquilar Auto</h2>
             <form id="alquilerForm" class="space-y-4">
                 <div>
-                    <label class="block text-gray-700">Nombre</label>
-                    <input type="text" id="nombreCliente" class="w-full p-2 border rounded" required>
+                    <label class="font-semibold text-sm text-gray-600">Nombre</label>
+                    <div class="flex items-center gap-2 ring-1 ring-violet-300 rounded p-2 focus-within:ring-2">
+                        <i class="fa fa-user text-gray-400"></i>
+                        <input type="text" id="nombreCliente" class="w-full outline-none" required>
+                    </div>
                 </div>
                 <div>
-                    <label class="block text-gray-700">Carnet de Identidad</label>
-                    <input type="text" id="ciCliente" class="w-full p-2 border rounded" required>
+                    <label class="font-semibold text-sm text-gray-600">Carnet de Identidad</label>
+                    <div class="flex items-center gap-2 ring-1 ring-violet-300 rounded p-2 focus-within:ring-2">
+                        <i class="fa fa-id-card text-gray-400"></i>
+                        <input type="text" id="ciCliente" class="w-full outline-none" required>
+                    </div>
                 </div>
                 <div>
-                    <label class="block text-gray-700">Auto</label>
-                    <select id="autoSeleccionado" class="w-full p-2 border rounded" required></select>
+                    <label class="font-semibold text-sm text-gray-600">Auto</label>
+                    <div class="flex items-center gap-2 ring-1 ring-violet-300 rounded p-2 focus-within:ring-2">
+                        <i class="fa fa-car text-gray-400"></i>
+                        <select id="autoSeleccionado" class="w-full outline-none" required></select>
+                    </div>
                 </div>
                 <div>
-                    <label class="block text-gray-700">Fecha y Hora Inicio</label>
-                    <input type="datetime-local" id="fechaInicio" class="w-full p-2 border rounded" required>
+                    <label class="font-semibold text-sm text-gray-600">Fecha y Hora Inicio</label>
+                    <div class="flex items-center gap-2 ring-1 ring-violet-300 rounded p-2 focus-within:ring-2">
+                        <i class="fa fa-calendar text-gray-400"></i>
+                        <input type="datetime-local" id="fechaInicio" class="w-full outline-none" required>
+                    </div>
                 </div>
                 <div>
-                    <label class="block text-gray-700">Fecha y Hora Fin</label>
-                    <input type="datetime-local" id="fechaFin" class="w-full p-2 border rounded" required>
+                    <label class="font-semibold text-sm text-gray-600">Fecha y Hora Fin</label>
+                    <div class="flex items-center gap-2 ring-1 ring-violet-300 rounded p-2 focus-within:ring-2">
+                        <i class="fa fa-calendar-check text-gray-400"></i>
+                        <input type="datetime-local" id="fechaFin" class="w-full outline-none" required>
+                    </div>
                 </div>
-                <button type="submit" class="bg-violet-600 text-white px-6 py-2 rounded-full shadow hover:bg-violet-700 transition">Alquilar</button>
+                <button type="submit" class="w-full bg-violet-600 text-white px-6 py-2 rounded-full shadow hover:bg-violet-700 transition">Alquilar</button>
             </form>
         </div>
 
@@ -274,17 +297,47 @@
             document.getElementById('reserva').scrollIntoView({behavior: 'smooth'});
         });
 
+        function initFiltros(){
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    buttons.forEach(b => b.classList.remove('bg-violet-600','text-white'));
+                    buttons.forEach(b => b.classList.add('bg-gray-100','text-gray-700'));
+                    btn.classList.remove('bg-gray-100','text-gray-700');
+                    btn.classList.add('bg-violet-600','text-white');
+                    filtrarAutos(btn.dataset.filter);
+                });
+            });
+        }
+
+        const destacadosData = [...autos].sort((a,b) => b.precioHora - a.precioHora).slice(0,6);
+        let destIndex = 0;
         function cargarDestacados() {
-            const destacados = [...autos].sort((a,b) => b.precioHora - a.precioHora).slice(0,6);
             const cont = document.getElementById('destacados');
-            destacados.forEach(auto => {
+            cont.innerHTML = '';
+            destacadosData.forEach(auto => {
                 const div = document.createElement('div');
-                div.className = 'min-w-[250px] snap-start bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl hover:scale-105 transition-all';
-                div.innerHTML = `<img src="${auto.imagen}" class="w-full h-40 object-cover"/><div class="p-4"><h3 class="font-semibold">${auto.nombre}</h3><p class="text-gray-500">Bs. ${auto.precioHora}/hora</p></div>`;
+                div.className = 'w-1/2 p-4 flex-shrink-0';
+                div.innerHTML = `<div class="bg-white rounded-xl shadow-lg overflow-hidden"><img src="${auto.imagen}" class="w-full h-40 object-cover"/><div class="p-4"><h3 class="font-semibold">${auto.nombre}</h3><p class="text-gray-500">Bs. ${auto.precioHora}/hora</p></div></div>`;
+                div.dataset.tipo = auto.tipo;
                 cont.appendChild(div);
             });
         }
-        document.addEventListener('DOMContentLoaded', cargarDestacados);
+
+        function moverDestacados(dir=1){
+            const cont = document.getElementById('destacados');
+            const pares = Math.ceil(destacadosData.length/2);
+            destIndex = (destIndex + dir + pares) % pares;
+            cont.scrollTo({left: cont.clientWidth * destIndex, behavior:'smooth'});
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarDestacados();
+            initFiltros();
+            document.getElementById('prevDest').addEventListener('click', () => moverDestacados(-1));
+            document.getElementById('nextDest').addEventListener('click', () => moverDestacados(1));
+            setInterval(moverDestacados,5000);
+        });
     </script>
 </body>
 
