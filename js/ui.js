@@ -45,25 +45,16 @@ function mostrarAutos(autosAMostrar) {
 
 function crearTarjetaAuto(auto) {
     const div = document.createElement('div');
-    div.className = 'bg-white rounded-lg shadow-lg overflow-hidden';
-    
+    div.className = 'min-w-[250px] bg-white rounded-xl shadow-md overflow-hidden hover:scale-105 transition-all';
+
     div.innerHTML = `
-        <img src="${auto.imagen}" alt="${auto.nombre}" class="w-full h-48 object-cover">
+        <img src="${auto.imagen}" alt="${auto.nombre}" class="w-full h-40 object-cover">
         <div class="p-4">
-            <h3 class="text-xl font-bold mb-2">${auto.nombre}</h3>
-            <p class="text-gray-600 mb-2">Tipo: ${auto.tipo === 'electrico' ? 'Eléctrico' : 'Híbrido'}</p>
-            <p class="text-blue-500 font-bold mb-2">Bs. ${auto.precioHora}/hora</p>
-            <p class="text-${auto.disponible ? 'green' : 'red'}-500 mb-4">
-                ${auto.disponible ? 'Disponible' : 'No disponible'}
-            </p>
-            ${rolActual === 'admin' ? `
-                <button onclick="eliminarAuto(${auto.id})" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-                    Eliminar
-                </button>
-            ` : ''}
-        </div>
-    `;
-    
+            <h4 class="font-semibold text-gray-700 mb-1">${auto.nombre}</h4>
+            <p class="text-gray-500">Bs. ${auto.precioHora}/hora</p>
+            ${rolActual === 'admin' ? `<button onclick="eliminarAuto(${auto.id})" class="mt-2 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Eliminar</button>` : ''}
+        </div>`;
+
     return div;
 }
 
