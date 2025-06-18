@@ -11,7 +11,10 @@ function cambiarRol(rol) {
 
 function setRole(rol) {
     cambiarRol(rol);
-    toggleUserMenu();
+    localStorage.setItem('ecorenta-rol', rol);
+    if (typeof toggleUserMenu === 'function') {
+        toggleUserMenu();
+    }
 }
 
 // Funciones de filtrado

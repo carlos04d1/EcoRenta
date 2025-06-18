@@ -247,6 +247,10 @@ function actualizarSelectAutos() {
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
+    const storedRole = localStorage.getItem('ecorenta-rol');
+    if (storedRole) {
+        cambiarRol(storedRole);
+    }
     // Formulario de alquiler
     document.getElementById('alquilerForm').addEventListener('submit', (e) => {
         e.preventDefault();
@@ -315,7 +319,5 @@ document.addEventListener('DOMContentLoaded', () => {
             e.target.reset();
         });
     }
+    actualizarVista();
 });
-
-// Inicialización
-actualizarVista(); 
