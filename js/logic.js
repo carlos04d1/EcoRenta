@@ -61,7 +61,7 @@ function crearSolicitud(nombre, ci, autoId, fechaInicio, fechaFin) {
         estado: 'pendiente'
     };
 
-    solicitudesPendientes.push(solicitud);
+    reservasPendientes.push(solicitud);
     actualizarVista();
 }
 
@@ -101,9 +101,9 @@ function obtenerAutos() {
 
 function obtenerRentas() {
     if (rolActual === 'cliente') {
-        return rentasConfirmadas.filter(renta => renta.cliente === clienteActual);
+        return reservasConfirmadas.filter(renta => renta.cliente === clienteActual);
     }
-    return rentasConfirmadas;
+    return reservasConfirmadas;
 }
 
 function obtenerAutoPorId(id) {
@@ -112,7 +112,7 @@ function obtenerAutoPorId(id) {
 
 // Gestión de solicitudes
 function aprobarSolicitud(index, trabajadorNombre, trabajadorCI) {
-    const solicitud = solicitudesPendientes.splice(index, 1)[0];
+    const solicitud = reservasPendientes.splice(index, 1)[0];
     if (!solicitud) return;
 
     const auto = obtenerAutoPorId(solicitud.autoID);
@@ -124,7 +124,7 @@ function aprobarSolicitud(index, trabajadorNombre, trabajadorCI) {
     const total = horas * auto.precioHora;
 
     const renta = {
-        id: rentasConfirmadas.length + 1,
+        id: reservasConfirmadas.length + 1,
         cliente: solicitud.clienteNombre,
         clienteCI: solicitud.clienteCI,
         autoId: solicitud.autoID,
@@ -136,17 +136,17 @@ function aprobarSolicitud(index, trabajadorNombre, trabajadorCI) {
         total
     };
 
-    rentasConfirmadas.push(renta);
+    reservasConfirmadas.push(renta);
     auto.disponible = false;
     actualizarVista();
 }
 
 function rechazarSolicitud(index, trabajadorNombre, trabajadorCI) {
-    const solicitud = solicitudesPendientes.splice(index, 1)[0];
+    const solicitud = reservasPendientes.splice(index, 1)[0];
     if (!solicitud) return;
 
     const registro = {
-        id: rentasConfirmadas.length + 1,
+        id: reservasConfirmadas.length + 1,
         cliente: solicitud.clienteNombre,
         clienteCI: solicitud.clienteCI,
         autoId: solicitud.autoID,
@@ -157,7 +157,7 @@ function rechazarSolicitud(index, trabajadorNombre, trabajadorCI) {
         estado: 'rechazado'
     };
 
-    rentasConfirmadas.push(registro);
+    reservasConfirmadas.push(registro);
     actualizarVista();
 }
 

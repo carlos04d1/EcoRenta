@@ -113,7 +113,7 @@ const autos = [
         imagen: "https://cdn.prod.website-files.com/5ec85520c4dfff034b036be2/66c63e70b7367d01def1e2f0_ford-maverick-hybrid-awd_main.webp"
     }
 ];
-const rentasConfirmadas = [
+const reservasConfirmadas = [
     {
         id: 1,
         cliente: "Juan Pérez",
@@ -176,7 +176,7 @@ const rentasConfirmadas = [
     }
 ];
 
-const solicitudesPendientes = [];
+const reservasPendientes = [];
 const revisionesVehiculo = [
     {
         autoID: 1,
