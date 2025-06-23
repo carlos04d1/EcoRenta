@@ -4,7 +4,7 @@ function actualizarVista() {
     mostrarAutos(autos);
     filtrarAutos(typeof filtroActual !== 'undefined' ? filtroActual : 'todos');
     mostrarRentas();
-    mostrarSolicitudes();
+    mostrarReservasPendientes();
     mostrarRevisiones();
     mostrarMultas();
 }
@@ -88,7 +88,7 @@ function mostrarRentas() {
                     <p class="text-gray-600">Inicio: ${new Date(renta.fechaInicio).toLocaleString()}</p>
                     <p class="text-gray-600">Fin: ${new Date(renta.fechaFin).toLocaleString()}</p>
                     ${renta.trabajadorNombre ? `<p class="text-gray-600">Atendido por: ${renta.trabajadorNombre}</p>` : ''}
-                    ${renta.estado ? `<p class="text-gray-600">Estado: ${renta.estado}</p>` : ''}
+                    ${renta.estado ? `<p class="font-semibold ${renta.estado === 'aprobado' ? 'text-green-600' : renta.estado === 'rechazado' ? 'text-red-600' : 'text-yellow-600'}">Estado: ${renta.estado}</p>` : ''}
                 </div>
                 <div class="text-right">
                     ${renta.total ? `<p class="text-blue-500 font-bold">Total: Bs. ${renta.total}</p>` : ''}
@@ -100,15 +100,15 @@ function mostrarRentas() {
     });
 }
 
-function mostrarSolicitudes() {
-    const contenedor = document.getElementById('listaSolicitudes');
+function mostrarReservasPendientes() {
+    const contenedor = document.getElementById('listaReservas');
     if (!contenedor) return;
     contenedor.innerHTML = '';
 
-    solicitudesPendientes.forEach((sol, index) => {
+    reservasPendientes.forEach((sol, index) => {
         const auto = obtenerAutoPorId(sol.autoID);
         const div = document.createElement('div');
-        div.className = 'bg-gray-50 p-4 rounded-lg flex justify-between items-center mb-2';
+        div.className = 'bg-gray-50 p-4 rounded-lg flex justify-between items-center mb-2 border-l-4 border-yellow-500';
         div.innerHTML = `
             <div>
                 <p class="font-bold">${sol.clienteNombre} (CI: ${sol.clienteCI})</p>
@@ -206,6 +206,7 @@ function aprobarSolicitudUI(indice) {
         return;
     }
     aprobarSolicitud(indice, trabajadorActual.nombre, trabajadorActual.ci);
+    mostrarNotificacion('Reserva aprobada', 'green');
 }
 
 function rechazarSolicitudUI(indice) {
@@ -214,14 +215,20 @@ function rechazarSolicitudUI(indice) {
         return;
     }
     rechazarSolicitud(indice, trabajadorActual.nombre, trabajadorActual.ci);
+    mostrarNotificacion('Reserva rechazada', 'red');
 }
 // Notificación visual al enviar formularios
-function mostrarNotificacion(mensaje) {
+function mostrarNotificacion(mensaje, color = 'green') {
     const contenedor = document.getElementById('alert-container');
     if (!contenedor) return;
 
     const alerta = document.createElement('div');
-    alerta.className = 'bg-green-100 text-green-800 rounded-md shadow px-4 py-3 mb-2';
+    const colores = {
+        yellow: 'bg-yellow-100 text-yellow-800',
+        green: 'bg-green-100 text-green-800',
+        red: 'bg-red-100 text-red-800'
+    };
+    alerta.className = `${colores[color] || colores.green} rounded-md shadow px-4 py-3 mb-2 transition`; 
     alerta.textContent = mensaje;
 
     contenedor.appendChild(alerta);
@@ -267,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
             clienteActual = nombre;
             crearSolicitud(nombre, ci, autoId, fechaInicio, fechaFin);
             e.target.reset();
-            mostrarNotificacion('Tu reserva fue enviada correctamente. Por favor, espera la confirmación de un trabajador.');
+            mostrarNotificacion('Reserva enviada para aprobación del trabajador', 'yellow');
         }
     });
 
