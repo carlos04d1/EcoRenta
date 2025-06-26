@@ -48,21 +48,29 @@ function validarAlquiler(fechaInicio, fechaFin) {
 function crearSolicitud(nombre, ci, autoId, fechaInicio, fechaFin) {
     const auto = autos.find(a => a.id === autoId);
     if (!auto || !auto.disponible) {
-        alert('El auto no está disponible');
-        return;
+        mostrarNotificacion('El auto no está disponible', 'red');
+        return false;
     }
 
     const solicitud = {
+        id: Date.now(), // ID único basado en timestamp
         clienteNombre: nombre,
         clienteCI: ci,
         autoID: autoId,
         fechaInicio,
         fechaFin,
-        estado: 'pendiente'
+        estado: 'pendiente',
+        fechaCreacion: new Date().toISOString()
     };
 
     reservasPendientes.push(solicitud);
+    
+    // Mostrar alerta de éxito
+    mostrarNotificacion('¡Reserva realizada con éxito! Espere la confirmación de un trabajador.', 'green');
+    
+    guardarDatos();
     actualizarVista();
+    return true;
 }
 
 // Funciones de administración
@@ -76,6 +84,7 @@ function agregarAuto(nombre, tipo, precio, imagen) {
         imagen
     };
     autos.push(nuevoAuto);
+    guardarDatos();
     actualizarVista();
 }
 
@@ -83,6 +92,7 @@ function eliminarAuto(id) {
     const index = autos.findIndex(auto => auto.id === id);
     if (index !== -1) {
         autos.splice(index, 1);
+        guardarDatos();
         actualizarVista();
     }
 }
@@ -91,6 +101,7 @@ function reiniciarDisponibilidad() {
     autos.forEach(auto => {
         auto.disponible = true;
     });
+    guardarDatos();
     actualizarVista();
 }
 
@@ -132,12 +143,16 @@ function aprobarSolicitud(index, trabajadorNombre, trabajadorCI) {
         fechaFin: solicitud.fechaFin,
         trabajadorNombre,
         trabajadorCI,
-        estado: 'aprobado',
-        total
+        estado: 'confirmada',
+        total,
+        fechaConfirmacion: new Date().toISOString()
     };
 
     reservasConfirmadas.push(renta);
     auto.disponible = false;
+    
+    mostrarNotificacion('Reserva confirmada exitosamente', 'green');
+    guardarDatos();
     actualizarVista();
 }
 
@@ -154,10 +169,14 @@ function rechazarSolicitud(index, trabajadorNombre, trabajadorCI) {
         fechaFin: solicitud.fechaFin,
         trabajadorNombre,
         trabajadorCI,
-        estado: 'rechazado'
+        estado: 'rechazada',
+        fechaRechazo: new Date().toISOString()
     };
 
     reservasConfirmadas.push(registro);
+    
+    mostrarNotificacion('Reserva rechazada', 'red');
+    guardarDatos();
     actualizarVista();
 }
 
@@ -171,6 +190,7 @@ function registrarRevision(autoID, estadoAnterior, notas, trabajadorNombre, trab
         trabajadorCI,
         fechaRevision
     });
+    guardarDatos();
     actualizarVista();
 }
 
@@ -186,12 +206,14 @@ function registrarMulta(clienteCI, clienteNombre, vehiculo, motivo, monto, traba
         fecha,
         estado: 'pendiente'
     });
+    guardarDatos();
     actualizarVista();
 }
 
 function pagarMulta(indice) {
     if (multas[indice]) {
         multas[indice].estado = 'pagada';
+        guardarDatos();
         actualizarVista();
     }
 }

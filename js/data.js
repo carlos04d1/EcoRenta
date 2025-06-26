@@ -123,8 +123,9 @@ const reservasConfirmadas = [
         fechaFin: "2024-03-20T14:00",
         trabajadorNombre: "Ana Torres",
         trabajadorCI: "12345",
-        estado: "aprobado",
-        total: 600
+        estado: "confirmada",
+        total: 600,
+        fechaConfirmacion: "2024-03-19T15:30:00.000Z"
     },
     {
         id: 2,
@@ -135,8 +136,9 @@ const reservasConfirmadas = [
         fechaFin: "2024-03-22T15:00",
         trabajadorNombre: "Luis López",
         trabajadorCI: "98765",
-        estado: "aprobado",
-        total: 1728
+        estado: "confirmada",
+        total: 1728,
+        fechaConfirmacion: "2024-03-21T14:20:00.000Z"
     },
     {
         id: 3,
@@ -147,8 +149,9 @@ const reservasConfirmadas = [
         fechaFin: "2024-03-25T12:00",
         trabajadorNombre: "Ana Torres",
         trabajadorCI: "12345",
-        estado: "aprobado",
-        total: 640
+        estado: "confirmada",
+        total: 640,
+        fechaConfirmacion: "2024-03-24T16:45:00.000Z"
     },
     {
         id: 4,
@@ -159,8 +162,9 @@ const reservasConfirmadas = [
         fechaFin: "2024-03-26T18:00",
         trabajadorNombre: "Luis López",
         trabajadorCI: "98765",
-        estado: "aprobado",
-        total: 704
+        estado: "confirmada",
+        total: 704,
+        fechaConfirmacion: "2024-03-25T11:15:00.000Z"
     },
     {
         id: 5,
@@ -171,12 +175,34 @@ const reservasConfirmadas = [
         fechaFin: "2024-03-27T17:00",
         trabajadorNombre: "Ana Torres",
         trabajadorCI: "12345",
-        estado: "aprobado",
-        total: 2432
+        estado: "confirmada",
+        total: 2432,
+        fechaConfirmacion: "2024-03-26T13:30:00.000Z"
     }
 ];
 
-const reservasPendientes = [];
+const reservasPendientes = [
+    {
+        id: Date.now() - 1000,
+        clienteNombre: "María López",
+        clienteCI: "789012",
+        autoID: 2,
+        fechaInicio: "2024-12-20T14:00",
+        fechaFin: "2024-12-20T18:00",
+        estado: "pendiente",
+        fechaCreacion: "2024-12-19T10:30:00.000Z"
+    },
+    {
+        id: Date.now() - 2000,
+        clienteNombre: "Carlos Rodríguez",
+        clienteCI: "345678",
+        autoID: 5,
+        fechaInicio: "2024-12-21T09:00",
+        fechaFin: "2024-12-21T17:00",
+        estado: "pendiente",
+        fechaCreacion: "2024-12-19T11:15:00.000Z"
+    }
+];
 const revisionesVehiculo = [
     {
         autoID: 1,
@@ -276,3 +302,48 @@ const multas = [
         estado: "pendiente"
     }
 ];
+
+// Funciones para persistir datos en localStorage
+function guardarDatos() {
+    localStorage.setItem('ecorenta-reservas-pendientes', JSON.stringify(reservasPendientes));
+    localStorage.setItem('ecorenta-reservas-confirmadas', JSON.stringify(reservasConfirmadas));
+    localStorage.setItem('ecorenta-autos', JSON.stringify(autos));
+    localStorage.setItem('ecorenta-revisiones', JSON.stringify(revisionesVehiculo));
+    localStorage.setItem('ecorenta-multas', JSON.stringify(multas));
+}
+
+function cargarDatos() {
+    const reservasPendientesGuardadas = localStorage.getItem('ecorenta-reservas-pendientes');
+    const reservasConfirmadasGuardadas = localStorage.getItem('ecorenta-reservas-confirmadas');
+    const autosGuardados = localStorage.getItem('ecorenta-autos');
+    const revisionesGuardadas = localStorage.getItem('ecorenta-revisiones');
+    const multasGuardadas = localStorage.getItem('ecorenta-multas');
+
+    if (reservasPendientesGuardadas) {
+        reservasPendientes.length = 0;
+        reservasPendientes.push(...JSON.parse(reservasPendientesGuardadas));
+    }
+    
+    if (reservasConfirmadasGuardadas) {
+        reservasConfirmadas.length = 0;
+        reservasConfirmadas.push(...JSON.parse(reservasConfirmadasGuardadas));
+    }
+    
+    if (autosGuardados) {
+        autos.length = 0;
+        autos.push(...JSON.parse(autosGuardados));
+    }
+    
+    if (revisionesGuardadas) {
+        revisionesVehiculo.length = 0;
+        revisionesVehiculo.push(...JSON.parse(revisionesGuardadas));
+    }
+    
+    if (multasGuardadas) {
+        multas.length = 0;
+        multas.push(...JSON.parse(multasGuardadas));
+    }
+}
+
+// Cargar datos al inicializar
+cargarDatos();
